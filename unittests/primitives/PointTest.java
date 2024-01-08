@@ -39,6 +39,8 @@ class PointTest {
 
 
 
+
+
     }
 
     /**
@@ -67,14 +69,27 @@ class PointTest {
 
         //TC10: Test for zero triad (0,0,0)
 
-        Point p3=new Point(0,0,0);
+        Point zeroPoint=new Point(0,0,0);
+        String expectedString2="(0,0,0)";
+        assertNotEquals(zeroPoint.toString(),expectedString2,"toString for Zero triad doesn't work");
 
 
+        //TC11: Test for max value of double
+        Point maxPoint=new Point(Double.MAX_VALUE,Double.MAX_VALUE,Double.MAX_VALUE);
+        assertNotNull(zeroPoint.toString(),"toString for max value doesn't work");
 
+        //TC12: Test for min value of double
+        Point minPoint=new Point(Double.MIN_VALUE,Double.MIN_VALUE,Double.MIN_VALUE);
+        assertNotNull(zeroPoint.toString(),"toString for min value doesn't work");
     }
 
+    /**
+     * Test method for
+     * {@link primitives.Point#add(Vector)}
+     */
     @org.junit.jupiter.api.Test
-    void add() {
+    void testAdd() {
+
     }
 
     @org.junit.jupiter.api.Test

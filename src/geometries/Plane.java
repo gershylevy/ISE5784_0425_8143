@@ -28,7 +28,7 @@ public class Plane extends Geometry {
      */
     public Plane(Point newQ, Point newNormal1, Point newNormal2) {
         this.q=newQ;
-        normal=null;
+        this.normal=((newNormal1.subtract(newQ)).crossProduct(newNormal2.subtract(newQ))).normalize();
     }
 
     /**
@@ -48,9 +48,7 @@ public class Plane extends Geometry {
      * @return the normal of the Plane (Vector)
      */
 
-    public Vector getNormal() {
-        return normal;
-    }
+    public Vector getNormal() { return normal; }
 
     /**
      * Getter function that returns the normal of the Plane with the input of a Point

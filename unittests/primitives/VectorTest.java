@@ -19,6 +19,10 @@ class VectorTest {
         assertEquals(expectedSolution, vector0.add(vector0),
                 "Addition with self failed");
 
+        //TC02: test for addition with the opposite vector (it's coordinates are minus our vector)
+        Vector vector1=new Vector(-1,-2,-3);
+        assertThrows(IllegalArgumentException.class, () -> vector1.add(vector0), "Vector equals 0");
+
 
         // ============ Equivalence Partitions Tests ==============
 
@@ -62,6 +66,12 @@ class VectorTest {
 
         assertEquals(vector0.scale(1), vector0, "Vector scale by 1 doesn't work");
 
+
+        //TC11: test scale by 0
+
+        assertThrows(IllegalArgumentException.class, () -> vector0.scale(0), "Vector equals 0");
+
+
     }
 
 
@@ -99,9 +109,14 @@ class VectorTest {
 
         //TC11: testDotProductWithSelf
 
-        Vector vector = new Vector(1.0, 2.0, 3.0);
-        assertEquals(vector.lengthSquared(), vector.dotProduct(vector), 1e-10,
+        assertEquals(vectorA.lengthSquared(), vectorA.dotProduct(vector), 1e-10,
                 "dot product with self failed");
+
+
+        //TC12: Test dot product with opposite vector
+       assertEquals(vectorA.dotProduct(vectorNegative),0,"dot product with opposite vector failed");
+
+
     }
 
     @org.junit.jupiter.api.Test
@@ -141,6 +156,12 @@ class VectorTest {
         Vector vectorY = new Vector(0.0, 1.0, 0.0);
         assertEquals(new Vector(0.0, 0.0, 1.0), vectorY.crossProduct(vectorX),
                 "failed testCrossProductWithOrthogonalVectors");
+
+
+        //TC12: test cross product with self
+
+        assertThrows(IllegalArgumentException.class, () -> vectorX.crossProduct(vectorX), "Vector equals 0");
+
 
     }
 

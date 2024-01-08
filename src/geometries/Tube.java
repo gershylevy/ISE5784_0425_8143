@@ -25,7 +25,6 @@ public class Tube extends RadialGeometry{
 
     @Override
     protected Vector getNormal(Point val) {
-        return null;
+        return (val.subtract(this.axis.head)).normalize();
     }
-
 }

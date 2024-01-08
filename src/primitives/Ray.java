@@ -4,13 +4,14 @@ package primitives;
  * @author netanel grossman
  */
 public class Ray {
-    /**beginning of the line
+    /**
+     * beginning of the line
      */
-    final Point head;
+    public final Point head;
     /**
      * vector representing direction ov line
      */
-    final Vector direction;
+    public final Vector direction;
 
     /**
      * constructor initializing head and direction
@@ -24,7 +25,7 @@ public class Ray {
 
     /**
      * function that checks if equal
-     * @param dRay different ray that we are checking if the same
+     * @param obj different ray that we are checking if the same
      * @return one or zero depending on if equal
      */
    public boolean equals(Ray obj) {

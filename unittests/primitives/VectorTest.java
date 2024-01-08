@@ -179,7 +179,6 @@ class VectorTest {
 
         //TC02: test length squared with negative components
 
-        Vector vectorNegative = new Vector(-1.0, -2.0, -3.0);
         assertEquals(14.0, vector.lengthSquared(), 1e-10,
                 "failed testLengthSquaredWithNegativeComponents"); // Squared magnitude is the same regardless of signs
 
@@ -276,7 +275,7 @@ class VectorTest {
 
         // TC03:test equals self
 
-        assertFalse(vectorA.equals(vectorA), "failed test doe equal itself");
+        assertTrue(vectorA.equals(vectorA), "failed test equals itself");
 
         //============ Boundary Partitions Tests ==============
 

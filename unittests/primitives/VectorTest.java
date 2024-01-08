@@ -109,7 +109,7 @@ class VectorTest {
 
         //TC11: testDotProductWithSelf
 
-        assertEquals(vectorA.lengthSquared(), vectorA.dotProduct(vector), 1e-10,
+        assertEquals(vectorA.lengthSquared(), vectorA.dotProduct(vectorA), 1e-10,
                 "dot product with self failed");
 
 

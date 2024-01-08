@@ -26,21 +26,32 @@ class PointTest {
 
         Point p1=new Point(1,2,3);
         Point p2=new Point(1,2,3);
-        assertFalse(p1.equals(p2), "2 identical Points are not equal");
+        assertTrue(p1.equals(p2), "2 identical Points are not equal");
 
         //TC02: 2 Points that are not identical
 
         Point p3=new Point(1,2,3);
         Point p4=new Point(1,2,4);
-        assertTrue(p3.equals(p4), "2 non identical Points are equal");
-
-        //TC03: 2 Points
+        assertFalse(p3.equals(p4), "2 non identical Points are equal");
 
 
+        //TC03: Same Point
+
+        assertTrue(p1.equals(p1),"Point isn't equal to itself");
 
 
+        //TC04: 2 Points are equal in both directions
+
+        assertEquals(p1.equals(p2),p2.equals(p1),"2 Points arnt equal in both directions");
 
 
+        // =============== Boundary Values Tests ==================
+
+
+        //TC10: Zero Point
+
+        Point p5=new Point(0,0,0);
+        assertFalse(p1.equals(p5),"Non-zero Point equals zero Point");
     }
 
     /**

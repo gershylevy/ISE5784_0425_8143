@@ -25,8 +25,10 @@ public class Sphere extends RadialGeometry{
     }
 
     @Override
-    protected Vector getNormal(Point val) {
-        return null;
+    protected Vector getNormal(Point val){
+        // Calculate the vector from the center to the point on the surface
+        Vector vectorToSurface = val.subtract(center);
+        return vectorToSurface.normalize();
     }
 
 }

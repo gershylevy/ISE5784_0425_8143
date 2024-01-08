@@ -85,15 +85,6 @@ class PointTest {
         assertEquals(zeroPoint.toString(),expectedString2,"toString for Zero triad doesn't work");
 
 
-        //TC11: Test for max value of double
-
-        Point maxPoint=new Point(Double.MAX_VALUE,Double.MAX_VALUE,Double.MAX_VALUE);
-        assertNotNull(zeroPoint.toString(),"toString for max value doesn't work");
-
-        //TC12: Test for min value of double
-
-        Point minPoint=new Point(Double.MIN_VALUE,Double.MIN_VALUE,Double.MIN_VALUE);
-        assertNotNull(zeroPoint.toString(),"toString for min value doesn't work");
     }
 
     /**

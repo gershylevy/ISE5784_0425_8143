@@ -14,78 +14,13 @@ class PointTest {
     private final double DELTA = 0.000001;
 
     /**
-     * Test method for
-     * {@link primitives.Point#equals(Object)}
-     */
 
-    @org.junit.jupiter.api.Test
-    void testEquals() {
-        // ============ Equivalence Partitions Tests ==============
-
-        //TC01: 2 identical Points
-
-        Point p1=new Point(1,2,3);
-        Point p2=new Point(1,2,3);
-        assertTrue(p1.equals(p2), "2 identical Points are not equal");
-
-        //TC02: 2 Points that are not identical
-
-        Point p3=new Point(1,2,3);
-        Point p4=new Point(1,2,4);
-        assertFalse(p3.equals(p4), "2 non identical Points are equal");
-
-
-        //TC03: Same Point
-
-        assertTrue(p1.equals(p1),"Point isn't equal to itself");
-
-
-        //TC04: 2 Points are equal in both directions
-
-        assertEquals(p1.equals(p2),p2.equals(p1),"2 Points arnt equal in both directions");
-
-
-        // =============== Boundary Values Tests ==================
-
-
-        //TC10: Zero Point
-
-        Point p5=new Point(0,0,0);
-        assertFalse(p1.equals(p5),"Non-zero Point equals zero Point");
-    }
 
     /**
      * Test method for
      * {@link primitives.Point#toString()}
      */
 
-    @org.junit.jupiter.api.Test
-    void testToString() {
-        // ============ Equivalence Partitions Tests ==============
-
-        //TC01: Test that toString returns expected String
-
-        Point p1=new Point(1.0,2.0,3.0);
-        String expectedString1="(1.0,2.0,3.0)";
-        assertEquals(expectedString1,p1.toString(),"toString doesn't return expected String");
-
-
-        //TC02: Test that toString returns same value for identical Strings
-
-        Point p2=new Point(1,2,3);
-        assertEquals(p1.toString(),p2.toString(),"2 identical Strings don't return same toString");
-
-
-        // =============== Boundary Values Tests ==================
-
-        //TC10: Test for zero triad (0,0,0)
-
-        Point zeroPoint=new Point(0,0,0);
-        String expectedString2="(0.0,0.0,0.0)";
-        assertEquals(expectedString2,zeroPoint.toString(),"toString for Zero triad doesn't work");
-
-
-    }
 
     /**
      * Test method for

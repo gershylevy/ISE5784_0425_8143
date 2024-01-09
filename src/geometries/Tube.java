@@ -4,6 +4,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import static primitives.Util.isZero;
+
 /**
  * Tube class represents tube in 3D Cartesian coordinate
  */
@@ -25,10 +27,10 @@ public class Tube extends RadialGeometry{
 
     @Override
     protected Vector getNormal(Point val) {
-        if(0==axis.direction.dotProduct(val.subtract(axis.head)))
+        double t = axis.direction.dotProduct(val.subtract(axis.head));
+        if(isZero(t))
             return ((val.subtract(axis.head)).normalize());
 
-        double t=this.axis.direction.dotProduct(val.subtract(this.axis.head));
         Point o=this.axis.head.add(this.axis.direction.scale(t));
         return (val.subtract(o)).normalize();
     }

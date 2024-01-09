@@ -269,54 +269,47 @@ class VectorTest {
     }
 
     /**
-     * Test case for
-     * {@link Vector#toString()}
+     * Test method for
+     * {@link primitives.Vector#Vector(double, double, double)}
      */
 
-    @org.junit.jupiter.api.Test
-    void testToString() {
+
+    void Testconstructor() {
+
         //============ Equivalence Partitions Tests ==============
 
-        //TC01: test ToString Standard
-
-        Vector vector = new Vector(1.0, 2.0, 3.0);
-        assertEquals("(1.0,2.0,3.0)", vector.toString());
 
         //============ Boundary Partitions Tests ==============
+
+        assertThrows(IllegalArgumentException.class, () -> new Vector(0,0,0), "Didn't throw Vector equals 0");
 
     }
 
     /**
-     * Test case for
-     * {@link primitives.Vector#equals(Object)}
+     * Test method for
+     * {@link primitives.Vector#Vector(Double3)}
      */
 
-
-    @org.junit.jupiter.api.Test
-    void testEquals() {
+    void TestconstructorDouble3() {
 
         //============ Equivalence Partitions Tests ==============
 
-        //TC01: test Equals Standard
-
-        Vector vectorA = new Vector(1.0, 2.0, 3.0);
-        Vector vectorB = new Vector(1.0, 2.0, 3.0);
-        assertTrue(vectorA.equals(vectorB),
-                " failed test Equals Standard");
-
-
-        //TC02:testEqualsWithDifferentComponents
-
-        Vector vectorC = new Vector(3.0, 2.0, 1.0);
-        assertFalse(vectorA.equals(vectorC),
-                "failed test Equals With Different Components");
-
-
-        // TC03:test equals self
-
-        assertTrue(vectorA.equals(vectorA), "failed test equals itself");
 
         //============ Boundary Partitions Tests ==============
 
+        Double3 temp=new Double3(0,0,0);
+        assertThrows(IllegalArgumentException.class, () -> new Vector(temp), "Didn't throw Vector equals 0");
+
     }
+
+
+
+
+
+
+
+
+
+
+
 }

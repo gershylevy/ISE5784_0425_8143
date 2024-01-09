@@ -8,6 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @Nested
 class VectorTest {
 
+    /**
+     * Test case for
+     * {@link primitives.Vector#add(Vector)}
+     */
+
     @org.junit.jupiter.api.Test
     void add() {
 
@@ -41,6 +46,11 @@ class VectorTest {
         assertEquals(vectorA.add(vectorB), vectorB.add(vectorA), "Vector addition doesn't go both ways");
     }
 
+    /**
+     * Test case for
+     * {@link primitives.Vector#scale(double)}
+     */
+
     @org.junit.jupiter.api.Test
     void scale() {
 
@@ -73,6 +83,11 @@ class VectorTest {
 
 
     }
+
+    /**
+     * Test case for
+     * {@link primitives.Vector#dotProduct(Vector)}
+     */
 
 
     @org.junit.jupiter.api.Test
@@ -118,6 +133,11 @@ class VectorTest {
 
 
     }
+
+    /**
+     * Test case for
+     * {@link primitives.Vector#crossProduct(Vector)}
+     */
 
     @org.junit.jupiter.api.Test
     void crossProduct() {
@@ -165,6 +185,11 @@ class VectorTest {
 
     }
 
+    /**
+     * Test case for
+     * {@link Vector#lengthSquared()}
+     */
+
     @org.junit.jupiter.api.Test
     void lengthSquared() {
 
@@ -187,6 +212,11 @@ class VectorTest {
 
     }
 
+
+    /**
+     * Test case for
+     * {@link Vector#length()}
+     */
     @org.junit.jupiter.api.Test
     void length() {
 
@@ -211,6 +241,11 @@ class VectorTest {
 
     }
 
+
+    /**
+     * Test case for
+     * {@link Vector#normalize()}
+     */
     @org.junit.jupiter.api.Test
     void normalize() {
 
@@ -239,6 +274,11 @@ class VectorTest {
 
     }
 
+    /**
+     * Test case for
+     * {@link Vector#toString()}
+     */
+
     @org.junit.jupiter.api.Test
     void testToString() {
         //============ Equivalence Partitions Tests ==============
@@ -251,6 +291,11 @@ class VectorTest {
         //============ Boundary Partitions Tests ==============
 
     }
+
+    /**
+     * Test case for
+     * {@link primitives.Vector#equals(Object)}
+     */
 
 
     @org.junit.jupiter.api.Test

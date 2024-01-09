@@ -10,7 +10,7 @@ class SphereTest {
 
     @Test
     void getNormal() {
-        // Assuming a sphere centered at (3,3,3) with radius 1
+        // Assuming a sphere centered at (1,1,1) with radius 1
         Sphere sphere = new Sphere(new Point(1, 1, 1), 1);
         // ============ Equivalence Partitions Tests ==============
        //Tc01: testCalculateNormal classic

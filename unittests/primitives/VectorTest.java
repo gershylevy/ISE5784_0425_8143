@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class VectorTest {
 
     /**
-     * Test case for
+     * Test case for tube
      * {@link primitives.Vector#add(Vector)}
      */
 

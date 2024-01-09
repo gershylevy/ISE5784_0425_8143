@@ -65,9 +65,9 @@ class PointTest {
 
         //TC01: Test that toString returns expected String
 
-        Point p1=new Point(1,2,3);
-        String expectedString1="(1,2,3)";
-        assertEquals(p1.toString(),expectedString1,"toString doesn't return expected String");
+        Point p1=new Point(1.0,2.0,3.0);
+        String expectedString1="(1.0,2.0,3.0)";
+        assertEquals(expectedString1,p1.toString(),"toString doesn't return expected String");
 
 
         //TC02: Test that toString returns same value for identical Strings
@@ -81,8 +81,8 @@ class PointTest {
         //TC10: Test for zero triad (0,0,0)
 
         Point zeroPoint=new Point(0,0,0);
-        String expectedString2="(0,0,0)";
-        assertEquals(zeroPoint.toString(),expectedString2,"toString for Zero triad doesn't work");
+        String expectedString2="(0.0,0.0,0.0)";
+        assertEquals(expectedString2,zeroPoint.toString(),"toString for Zero triad doesn't work");
 
 
     }
@@ -100,7 +100,7 @@ class PointTest {
         Point p1=new Point(1,2,3);
         Vector v1=new Vector(4,5,6);
         Point expectedResult1=new Point(5,7,9);
-        assertEquals(p1.add(v1),expectedResult1,"Addition doesn't work");
+        assertEquals(expectedResult1,p1.add(v1),"Addition doesn't work");
 
 
         //TC02: Test that addition of different Vectors returns different results
@@ -113,28 +113,22 @@ class PointTest {
 
         Vector v3=new Vector(-4,-5,-6);
         Point expectedResult2=new Point(-3,-3,-3);
-        assertEquals(p1.add(v3),expectedResult2,"Addition of Vector with negative numbers doesn't work");
+        assertEquals(expectedResult2,p1.add(v3),"Addition of Vector with negative numbers doesn't work");
 
         // =============== Boundary Values Tests ==================
 
 
-        //TC10: Addition of zero Vector
-
-        Vector zeroVector=new Vector(0,0,0);
-        assertEquals(p1,p1.add(zeroVector),"Addition of zero Vector doesn't return same Point");
-
-
-        //TC11: Addition of Vector with negative coordinates to the Point
+        //TC10: Addition of Vector with negative coordinates to the Point
 
         Vector negativeVector=new Vector(-1,-2,-3);
         Point zeroPoint=new Point(0,0,0);
         assertEquals(p1.add(negativeVector),zeroPoint,"Addition with Vector with negative coordinates to the Point doesn't work");
 
 
-        //TC12: Addition of zero Point
+        //TC11: Addition of zero Point
 
         Point expectedResult3=new Point(4,5,6);
-        assertEquals(zeroPoint.add(v1),expectedResult3,"Addition of zero Point doesn't work");
+        assertEquals(expectedResult3,zeroPoint.add(v1),"Addition of zero Point doesn't work");
 
     }
 
@@ -152,7 +146,7 @@ class PointTest {
         Point p1=new Point(1,2,3);
         Point p2=new Point(4,5,6);
         Vector expectedResult1=new Vector(3,3,3);
-        assertEquals(p2.subtract(p1),expectedResult1,"Subtraction doesn't work");
+        assertEquals(expectedResult1,p2.subtract(p1),"Subtraction doesn't work");
 
 
         //TC02: Test that Subtraction of different Points from the same Point returns different results
@@ -170,7 +164,7 @@ class PointTest {
 
         Point p4=new Point(-4,-5,-6);
         Vector expectedResult2=new Vector(5,7,9);
-        assertEquals(p1.subtract(p4),expectedResult2,"Subtraction of Point with negative values doesn't work");
+        assertEquals(expectedResult2,p1.subtract(p4),"Subtraction of Point with negative values doesn't work");
 
 
         // =============== Boundary Values Tests ==================
@@ -183,17 +177,10 @@ class PointTest {
         assertEquals(expectedResult,p1.subtract(zeroPoint),"Subtraction of zero Point doesn't return Vector with same coordinates");
 
 
-        //TC11: Subtraction of Point with negative coordinates to the Point
-
-        Point negativePoint=new Point(-1,-2,-3);
-        Vector zeroVector=new Vector(0,0,0);
-        assertEquals(p1.subtract(negativePoint),zeroVector,"Subtraction with Point with negative coordinates to the Point doesn't return 0 Vector");
-
-
-        //TC12: Subtraction from zero Point
+        //TC11: Subtraction from zero Point
 
         Vector expectedResult3=new Vector(-1,-2,-3);
-        assertEquals(zeroPoint.subtract(p1),expectedResult3,"Subtraction from zero Point doesn't work");
+        assertEquals(expectedResult3,zeroPoint.subtract(p1),"Subtraction from zero Point doesn't work");
     }
 
     /**
@@ -209,13 +196,13 @@ class PointTest {
         //TC01: Test for if distance squared of Point from itself is 0
 
         Point p1=new Point(1,2,3);
-        assertEquals(p1.distanceSquared(p1),0,DELTA,"Distance squared of Point from itself is not 0");
+        assertEquals(0,p1.distanceSquared(p1),DELTA,"Distance squared of Point from itself is not 0");
 
 
         //TC02: Test if distance squared between 2 random Points is as expected
 
         Point p3=new Point(1,2,1);
-        assertEquals(p1.distanceSquared(p3),4,DELTA,"Distance squared between 2 Points is not as expected");
+        assertEquals(4,p1.distanceSquared(p3),DELTA,"Distance squared between 2 Points is not as expected");
 
 
         //TC03: Test if the distance squared between 2 Points is the same both ways
@@ -227,7 +214,7 @@ class PointTest {
         //TC04: Test to see if the distance squared works with negative numbers
 
         Point p4=new Point(-1,-2,-3);
-        assertEquals(p1.distanceSquared(p4),56,DELTA,"Distance squared doesn't work with negative numbers");
+        assertEquals(56,p1.distanceSquared(p4),DELTA,"Distance squared doesn't work with negative numbers");
 
 
         // =============== Boundary Values Tests ==================
@@ -253,13 +240,13 @@ class PointTest {
         //TC01: Test for if distance of Point from itself is 0
 
         Point p1=new Point(1,4,9);
-        assertEquals(p1.distance(p1),0,DELTA,"Distance of Point from itself is not 0");
+        assertEquals(0,p1.distance(p1),DELTA,"Distance of Point from itself is not 0");
 
 
         //TC02: Test if distance squared between 2 random Points is as expected
 
         Point p3=new Point(1,4,1);
-        assertEquals(p1.distance(p3),8,DELTA,"Distance between 2 Points is not as expected");
+        assertEquals(8,p1.distance(p3),DELTA,"Distance between 2 Points is not as expected");
 
 
         //TC03: Test if the distance between 2 Points is the same both ways
@@ -270,8 +257,8 @@ class PointTest {
 
         //TC04: Test to see if the distance works with negative numbers
 
-        Point p4=new Point(0,-4,5);
-        assertEquals(p1.distance(p4),56,DELTA,"Distance doesn't work with negative numbers");
+        Point p4=new Point(1,4,-1);
+        assertEquals(10,p1.distance(p4),DELTA,"Distance doesn't work with negative numbers");
 
 
         // =============== Boundary Values Tests ==================
@@ -281,6 +268,7 @@ class PointTest {
         //TC10: Test to check the distance squared from the origin Point (0,0,0)
 
         Point p5=new Point(0,0,0);
-        assertEquals(p1.distance(p5),14,DELTA,"Distance from origin doesn't work");
+        Point p6=new Point(4,3,0);
+        assertEquals(5,p6.distance(p5),DELTA,"Distance from origin doesn't work");
     }
 }

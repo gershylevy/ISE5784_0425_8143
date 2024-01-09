@@ -18,8 +18,8 @@ class PlaneTest {
     @Test
     void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
-
-        Plane p = new Plane(new Point(0, 0, 1), new Point(1, 0, 0), new Point(0, 1, 0));
+        Plane p = new Plane(new Point(0, 0, 1), new Point(1, 0, 0),
+                new Point(0, 1, 0));
         // ensure there are no exceptions
         assertDoesNotThrow(() -> p.getNormal(new Point(0, 0, 1)), "");
         // generate the test result

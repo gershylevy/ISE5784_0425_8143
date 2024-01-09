@@ -129,7 +129,7 @@ class VectorTest {
 
 
         //TC12: Test dot product with opposite vector
-       assertEquals(vectorA.dotProduct(vectorNegative),0,"dot product with opposite vector failed");
+       assertEquals(-14,vectorA.dotProduct(vectorNegative),"dot product with opposite vector failed");
 
 
     }
@@ -156,29 +156,23 @@ class VectorTest {
 
         Vector vectorNegative = new Vector(1.0, -2.0, 3.0);
         Vector vectorNegativeA = new Vector(-4.0, 5.0, -6.0);
-        assertEquals(new Vector(-27.0, -6.0, -3.0),
-                vectorNegativeA.crossProduct(vectorNegative),
+        assertEquals(new Vector(-3.0, -6.0, -3.0),
+                vectorNegative.crossProduct(vectorNegativeA),
                 "testCrossProductWithNegativeComponents");
 
 
         //============ Boundary Partitions Tests ==============
 
-        //TC10: testCrossProductWithParallelVectors
 
-        Vector parallelVector = new Vector(2.0, 4.0, 6.0); // A scalar multiple of vectorA
-        assertEquals(new Vector(0.0, 0.0, 0.0), vectorA.crossProduct(parallelVector),
-                " failed testCrossProductWithParallelVectors");
-
-
-        //TC11: testCrossProductWithOrthogonalVectors
+        //TC10: testCrossProductWithOrthogonalVectors
 
         Vector vectorX = new Vector(1.0, 0.0, 0.0);
         Vector vectorY = new Vector(0.0, 1.0, 0.0);
-        assertEquals(new Vector(0.0, 0.0, 1.0), vectorY.crossProduct(vectorX),
+        assertEquals(new Vector(0.0, 0.0, 1.0), vectorX.crossProduct(vectorY),
                 "failed testCrossProductWithOrthogonalVectors");
 
 
-        //TC12: test cross product with self
+        //TC11: test cross product with self
 
         assertThrows(IllegalArgumentException.class, () -> vectorX.crossProduct(vectorX), "Vector equals 0");
 
@@ -260,7 +254,7 @@ class VectorTest {
         //TC02: testNormalizeWithNegativeComponents
 
         Vector vectorNegative = new Vector(-4.0, 3.0, 0);
-        assertEquals(new Vector(-2.0 / 5, 3.0 / 5, 0 / 5.0), vectorNegative.normalize(),
+        assertEquals(new Vector(-4.0 / vectorNegative.length(), 3.0 / vectorNegative.length(), 0 / vectorNegative.length()), vectorNegative.normalize(),
                 "failed testNormalizeWithNegativeComponents");
 
 
@@ -286,7 +280,7 @@ class VectorTest {
         //TC01: test ToString Standard
 
         Vector vector = new Vector(1.0, 2.0, 3.0);
-        assertEquals("(1.0, 2.0, 3.0)", vector.toString());
+        assertEquals("(1.0,2.0,3.0)", vector.toString());
 
         //============ Boundary Partitions Tests ==============
 

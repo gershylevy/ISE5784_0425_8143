@@ -6,8 +6,15 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing Spheres
+ */
 class SphereTest {
 
+    /**
+     * Test method for
+     * {@link SphereTest#getNormal()}
+     */
     @Test
     void getNormal() {
         // Assuming a sphere centered at (1,1,1) with radius 1

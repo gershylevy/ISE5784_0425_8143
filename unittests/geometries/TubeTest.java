@@ -27,6 +27,6 @@ class TubeTest {
         // =============== Boundary Values Tests ==================
         //TC10: point-pointO is orthogonal to axis
         Point newPoint1= new Point(1,0,0);
-        assertThrows(IllegalArgumentException.class, () -> tube.getNormal(newPoint1), "failure text");
+        assertEquals(newPoint1,tube.getNormal(newPoint1),"Tube failed getNormal orthogonal test");
     }
 }

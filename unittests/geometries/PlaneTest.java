@@ -6,6 +6,10 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing planes
+ */
+
 class PlaneTest {
 
     private final double DELTA = 0.000001;
@@ -30,11 +34,11 @@ class PlaneTest {
         // ensure |result| = 1
         assertEquals(1, result.length(), DELTA, "Plane's normal is not a unit vector");
         // ensure the result is orthogonal to all the edges
-        assertEquals(0,result.dotProduct(p1.subtract(p2)),
+        assertEquals(0, result.dotProduct(p1.subtract(p2)),
                 "Normal is not orthogonal to the Plane");
-        assertEquals(0,result.dotProduct(p1.subtract(p3)),
+        assertEquals(0, result.dotProduct(p1.subtract(p3)),
                 "Normal is not orthogonal to the Plane");
-        assertEquals(0,result.dotProduct(p2.subtract(p3)),
+        assertEquals(0, result.dotProduct(p2.subtract(p3)),
                 "Normal is not orthogonal to the Plane");
     }
 }

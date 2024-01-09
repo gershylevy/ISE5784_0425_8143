@@ -20,7 +20,8 @@ public class Point {
      * @param Coordinates Double3 that we put its values into a Point
      */
     public Point(Double3 Coordinates) {
-        xyz = new Double3(Coordinates.d1,Coordinates.d2,Coordinates.d3);
+        xyz = new Double3(Coordinates.d1,
+                Coordinates.d2,Coordinates.d3);
     }
 
 

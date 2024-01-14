@@ -1,13 +1,17 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Plane class represents two-dimensional plane in 3D Cartesian coordinate
  * system
  */
-public class Plane extends Geometry {
+public class Plane implements Geometry {
 
     /**
      * the point from which we calculate the Plane
@@ -60,5 +64,12 @@ public class Plane extends Geometry {
         return normal;
     }
 
+    @Override
+    public List<Point> findIntsersections(Ray ray) {
+        double t=(this.normal.dotProduct(this.q.subtract(ray.head)))/(this.normal.dotProduct(ray.direction));
+        List<Point>  pointList=new ArrayList<>();
+        pointList.add(ray.head.add(ray.direction.scale(t)));
+        return pointList;
+    }
 
 }

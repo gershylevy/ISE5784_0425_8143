@@ -2,7 +2,10 @@ package geometries;
 
 import primitives.Double3;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+import static primitives.Util.*;
+import java.util.List;
 
 /**
  * Sphere class represents sphere in 3D Cartesian coordinate
@@ -25,10 +28,14 @@ public class Sphere extends RadialGeometry{
     }
 
     @Override
-    protected Vector getNormal(Point val){
+    public Vector getNormal(Point val){
         // Calculate the vector from the center to the point on the surface
         Vector vectorToSurface = val.subtract(center);
         return vectorToSurface.normalize();
     }
 
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        return null;
+    }
 }

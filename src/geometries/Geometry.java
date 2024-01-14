@@ -10,7 +10,7 @@ import primitives.Vector;
  * system
  */
 
-public abstract class Geometry {
+public abstract interface Geometry extends Intersectable {
 
     /**
      * Abstract function (meant to be overridden by sons) to return the normal
@@ -18,6 +18,6 @@ public abstract class Geometry {
      * @param val the Point at which we will find the normal
      * @return the normal that we found (Vector)
      */
-    protected abstract Vector getNormal(Point val);
+    public abstract Vector getNormal(Point val);
 
 }

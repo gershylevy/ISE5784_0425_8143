@@ -4,6 +4,7 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class Triangle extends Polygon {
     public Triangle(Point point1,Point point2, Point point3){
         super(point1,point2,point3);
     }
-public boolean isInTriangle(point){Vector v1 = subtract(vertices.get(0), plane.q);
+public boolean isInTriangle(Point point){Vector v1 = subtract(vertices.get(0), plane.q);
     Vector v2 = subtract(vertices.get(1), plane.q);
     Vector v3 = subtract(vertices.get(2), plane.q);
 
@@ -35,10 +36,12 @@ public boolean isInTriangle(point){Vector v1 = subtract(vertices.get(0), plane.q
 }
     @Override
     public List<Point> findIntersections(Ray ray) {
-        Point suspectIntersections=plane.findIntersections(ray);
+        List<Point> pointList = new ArrayList<>(1);
+         pointList = plane.findIntersections(ray);
         // check if in triangle
-        if (this.isInTriangle(suspectIntersections)
-            return new list<point>[suspectIntersections];
+        if (this.isInTriangle(suspectIntersections){
+            pointList.add(suspectIntersections);
+            return pointList;}
         return null;
     }
 }

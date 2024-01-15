@@ -3,9 +3,9 @@ package geometries;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-
 import java.util.ArrayList;
 import java.util.List;
+import static primitives.Util.*;
 
 /**
  * Plane class represents two-dimensional plane in 3D Cartesian coordinate
@@ -66,7 +66,17 @@ public class Plane implements Geometry {
 
     @Override
     public List<Point> findIntersections(Ray ray) {
+        if(isZero(this.normal.dotProduct(ray.direction)))
+            return null;
+        double t=alignZero(this.normal.dotProduct(this.q.subtract(ray.head)))/(this.normal.dotProduct(ray.direction));
+        if(t>0) {
+            List<Point> pointList = new ArrayList<>(1);
+            pointList.add(ray.head.add(ray.direction.scale(t)));
+            return pointList;
+        }
         return null;
+
+
     }
 
 }

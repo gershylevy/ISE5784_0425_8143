@@ -50,15 +50,15 @@ public class Sphere extends RadialGeometry{
 
         Vector u = this.center.subtract(ray.head);
         double tm = ray.direction.dotProduct(u);
-        if (u.lengthSquared() - tm * tm < 0)
+        if (alignZero(u.lengthSquared() - tm * tm) < 0)
             return null;
         double d = sqrt(u.lengthSquared() - (tm * tm));
 
         if(d>=this.radius)
             return null;
         double th=sqrt(this.radius*this.radius-d*d);
-        double t2=tm+th;
-        double t1=tm-th;
+        double t2=alignZero(tm+th);
+        double t1=alignZero(tm-th);
 
         int length;
         if(t1>0&&t2>0)

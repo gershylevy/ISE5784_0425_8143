@@ -161,11 +161,6 @@ class PlaneTest {
                 "Amount of intersections incorrect for Ray begins on q of the Plane");
 
 
-
-
-
-
-
     }
 
 }

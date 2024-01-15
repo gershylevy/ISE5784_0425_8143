@@ -1,6 +1,7 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,28 +19,31 @@ class TriangleTest {
      * {@link }
      */
     public void testGetNormal() {
-    // ============ Equivalence Partitions Tests ==============
-    // TC01: There is a simple single test here - using a quad
-        Point p1=new Point(0,0,1);
-        Point p2=new Point(1,0,0);
-        Point p3=new Point(0,1,0);
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: There is a simple single test here - using a quad
+        Point p1 = new Point(0, 0, 1);
+        Point p2 = new Point(1, 0, 0);
+        Point p3 = new Point(0, 1, 0);
 
-    Triangle pol = new Triangle(p1, p2, p3);
-    // ensure there are no exceptions
-    assertDoesNotThrow(() -> pol.getNormal(p1), "");
-    // generate the test result
-    Vector result = pol.getNormal(p1);
-    // ensure |result| = 1
-    assertEquals(1, result.length(), DELTA,
-            "triangle's normal is not a unit vector");
-    // ensure the result is orthogonal to all the edges
-        assertEquals(0,result.dotProduct(p1.subtract(p2)),
+        Triangle pol = new Triangle(p1, p2, p3);
+        // ensure there are no exceptions
+        assertDoesNotThrow(() -> pol.getNormal(p1), "");
+        // generate the test result
+        Vector result = pol.getNormal(p1);
+        // ensure |result| = 1
+        assertEquals(1, result.length(), DELTA,
+                "triangle's normal is not a unit vector");
+        // ensure the result is orthogonal to all the edges
+        assertEquals(0, result.dotProduct(p1.subtract(p2)),
                 "Normal is not orthogonal to the triangle");
-        assertEquals(0,result.dotProduct(p1.subtract(p3)),
+        assertEquals(0, result.dotProduct(p1.subtract(p3)),
                 "Normal is not orthogonal to the triangle");
-        assertEquals(0,result.dotProduct(p2.subtract(p3)),
+        assertEquals(0, result.dotProduct(p2.subtract(p3)),
                 "Normal is not orthogonal to the triangle");
-}
+    }
+ public void testFindIntersections(Ray ray){
+
+ }
 
 
 }

@@ -75,8 +75,6 @@ public class Plane implements Geometry {
             return pointList;
         }
         return null;
-
-
     }
 
 }

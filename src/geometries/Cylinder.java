@@ -3,6 +3,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 /**
  * Cylinder class represents a Cylinder in 3D Cartesian coordinate
  * system
@@ -28,7 +30,8 @@ import primitives.Vector;
     }
 
     @Override
-    protected Vector getNormal(Point val) {
+    public Vector getNormal(Point val) {
         return null;
     }
+
 }

@@ -117,7 +117,7 @@ class SphereTest {
         Ray r6=new Ray(new Point(-2,0,0),new Vector(-1,0,1));
         List<Point> expectedResult6=s1.findIntersections(r6);
 
-        //Check that we have 0 intersections
+        //Check that we have 0 intersection
         assertNull(expectedResult6,
                 "Amount of intersections incorrect for Ray starts on Sphere and goes outside (no center)");
 

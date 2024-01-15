@@ -42,9 +42,8 @@ public class Sphere extends RadialGeometry{
 
         if(this.center.equals(ray.head)) {
             List<Point> pointList = new ArrayList<>(1);
-            Point p=new Point(0,0,0);
             Vector v= (ray.direction.scale(this.radius));
-            p=p.add(v);
+            Point p=this.center.add(v);
             pointList.add(p);
             return pointList;
         }
@@ -58,8 +57,8 @@ public class Sphere extends RadialGeometry{
         if(d>=this.radius)
             return null;
         double th=sqrt(this.radius*this.radius-d*d);
-        double t1=tm+th;
-        double t2=tm-th;
+        double t2=tm+th;
+        double t1=tm-th;
 
         int length;
         if(t1>0&&t2>0)

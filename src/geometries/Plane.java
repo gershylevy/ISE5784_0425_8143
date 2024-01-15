@@ -16,7 +16,7 @@ public class Plane implements Geometry {
     /**
      * the point from which we calculate the Plane
      */
-    private final Point q;
+    protected final Point q;
 
     /**
      * the Vector from which we calculate the Plane

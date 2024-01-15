@@ -1,6 +1,7 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Point.*;
 import primitives.Ray;
 import primitives.Vector;
 
@@ -20,16 +21,17 @@ public class Triangle extends Polygon {
     public Triangle(Point point1,Point point2, Point point3){
         super(point1,point2,point3);
     }
-public boolean isInTriangle(Point point){Vector v1 = subtract(vertices.get(0), plane.q);
-    Vector v2 = subtract(vertices.get(1), plane.q);
-    Vector v3 = subtract(vertices.get(2), plane.q);
+public boolean isInTriangle(Point point){
+        Vector v1 =vertices.get(0).subtract(plane.q);
+    Vector v2 = vertices.get(1).subtract(plane.q);
+    Vector v3 = vertices.get(2).subtract( plane.q);
 
-    Vector n1 = normalize(v1.crossProduct(v2));
-    Vector n2 = normalize(v2.crossProduct(v3));
-    Vector n3 = normalize(v3.crossProduct(v1);
-  double a= plane.normal.dotProduct(n1);
-    double b= plane.normal.dotProduct(n2);
-    double c= plane.normal.dotProduct(n3);
+    Vector n1 = v1.crossProduct(v2).normalize();
+    Vector n2 = v2.crossProduct(v3).normalize();
+    Vector n3 = v3.crossProduct(v1).normalize();
+  double a= plane.getNormal().dotProduct(n1);
+    double b= plane.getNormal().dotProduct(n2);
+    double c= plane.getNormal().dotProduct(n3);
   if (a>0&b>0&c>0)
       return true;
     return a < 0 & b < 0 & c < 0;
@@ -39,9 +41,8 @@ public boolean isInTriangle(Point point){Vector v1 = subtract(vertices.get(0), p
         List<Point> pointList = new ArrayList<>(1);
          pointList = plane.findIntersections(ray);
         // check if in triangle
-        if (this.isInTriangle(suspectIntersections){
-            pointList.add(suspectIntersections);
-            return pointList;}
+        if (this.isInTriangle(pointList.get(1)))
+            return pointList;
         return null;
     }
 }

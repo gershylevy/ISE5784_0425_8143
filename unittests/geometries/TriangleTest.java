@@ -42,7 +42,8 @@ class TriangleTest {
                 "Normal is not orthogonal to the triangle");
     }
  public void testFindIntersections(Ray ray){
-
+Triangle triangle=new Triangle(new Point( 1,1, 0),new Point(4, 2, 0),new Point( 3, 5, 0));
+assertEquals(new Point()triangle.findIntersections(ray));
  }
 
 

@@ -57,7 +57,7 @@ class PlaneTest {
 
         //TC01: Ray intersects the Plane (non-orthogonal)
 
-        Plane p1=new Plane(new Point(0,0,1),new Vector(0,1,0),new Vector(1,0,0));
+        Plane p1=new Plane(new Point(0,0,1),new Point(0,2,1),new Point(2,0,1));
         Ray r1=new Ray(new Point(1,0,0), new Vector(-1,0,1));
         List<Point> expectedResult1=p1.findIntersections(r1);
 

@@ -4,7 +4,7 @@ import primitives.Point;
 import primitives.Point.*;
 import primitives.Ray;
 import primitives.Vector;
-
+import static primitives.Util.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +29,9 @@ public boolean isInTriangle(Point point){
     Vector n1 = v1.crossProduct(v2).normalize();
     Vector n2 = v2.crossProduct(v3).normalize();
     Vector n3 = v3.crossProduct(v1).normalize();
-  double a= plane.getNormal().dotProduct(n1);
-    double b= plane.getNormal().dotProduct(n2);
-    double c= plane.getNormal().dotProduct(n3);
+  double a= alignZero(plane.getNormal().dotProduct(n1));
+    double b= alignZero(plane.getNormal().dotProduct(n2));
+    double c= alignZero(plane.getNormal().dotProduct(n3));
   if (a>0&b>0&c>0)
       return true;
     return a < 0 & b < 0 & c < 0;

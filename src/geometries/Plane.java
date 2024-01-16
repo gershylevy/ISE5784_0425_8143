@@ -68,6 +68,8 @@ public class Plane implements Geometry {
     public List<Point> findIntersections(Ray ray) {
         if(isZero(this.normal.dotProduct(ray.direction)))
             return null;
+        if(this.q.equals(ray.head))
+            return null;
         double t=alignZero(this.normal.dotProduct(this.q.subtract(ray.head)))/(this.normal.dotProduct(ray.direction));
         if(t>0) {
             List<Point> pointList = new ArrayList<>(1);

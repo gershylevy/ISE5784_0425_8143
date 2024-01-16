@@ -22,9 +22,9 @@ public class Geometries implements Intersectable {
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-    List<Point> allIntersections=new ArrayList<Point>(null);
+    List<Point> allIntersections=new ArrayList<Point>();
     for (int i=0;i<Shapes.size();i++){
-        allIntersections.addAll(Shapes.get(1).findIntersections(ray));}
+        allIntersections.addAll(Shapes.get(i).findIntersections(ray));}
     return allIntersections;
     }
 

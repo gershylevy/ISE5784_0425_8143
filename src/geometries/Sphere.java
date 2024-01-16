@@ -41,10 +41,9 @@ public class Sphere extends RadialGeometry{
 
 
         if(this.center.equals(ray.head)) {
-            List<Point> pointList = new ArrayList<>(1);
             Vector v= (ray.direction.scale(this.radius));
             Point p=this.center.add(v);
-            pointList.add(p);
+            final var pointList=List.of(p);
             return pointList;
         }
 
@@ -61,30 +60,29 @@ public class Sphere extends RadialGeometry{
         double t1=alignZero(tm-th);
 
         int length;
-        if(t1>0&&t2>0)
-            length=2;
+        if(t1>0&&t2>0) {
+            final var pointList=List.of(ray.getPoint(t1),ray.getPoint(t2));
+            return pointList;
+
+        }
         else {
-            if (t1 > 0 || t2 > 0)
-                length = 1;
-            else
+            if (t1 > 0){
+                final var pointList=List.of(ray.getPoint(t1));
+                return pointList;
+
+            }
+
+            if(t2>0){
+                final var pointList=List.of(ray.getPoint(t2));
+                return pointList;
+
+            }
+
+            if(t1<=0&&t2<=0){
                 return null;
+            }
+
         }
-
-
-        List<Point> pointList = new ArrayList<>(length);
-
-        if(t1>0) {
-            Point p1=ray.head.add(ray.direction.scale(t1));
-            pointList.add(p1);
-        }
-
-        if(t2>0) {
-            Point p2=ray.head.add(ray.direction.scale(t2));
-            pointList.add(p2);
-        }
-
-        return pointList;
-
-
+        return null;
     }
 }

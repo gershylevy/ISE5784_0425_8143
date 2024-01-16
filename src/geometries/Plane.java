@@ -72,8 +72,7 @@ public class Plane implements Geometry {
             return null;
         double t=alignZero(this.normal.dotProduct(this.q.subtract(ray.head)))/(this.normal.dotProduct(ray.direction));
         if(t>0) {
-            List<Point> pointList = new ArrayList<>(1);
-            pointList.add(ray.head.add(ray.direction.scale(t)));
+            final var pointList=List.of(ray.getPoint(t));
             return pointList;
         }
         return null;

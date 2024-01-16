@@ -85,7 +85,7 @@ public class Point {
     }
     /**
      * Function to calculate the distance between 2 Points
-     * @param point1 Point that its distance from our Point is being measured
+     * @param point2 Point that its distance from our Point is being measured
      * @return the distance between the 2 Points (double)
      */
     public Double distance(Point point2) {

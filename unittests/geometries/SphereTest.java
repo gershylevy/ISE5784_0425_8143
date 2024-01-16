@@ -23,7 +23,7 @@ class SphereTest {
         // Assuming a sphere centered at (1,1,1) with radius 1
         Sphere sphere = new Sphere(new Point(1, 1, 1), 1);
         // ============ Equivalence Partitions Tests ==============
-       //Tc01: testCalculateNormal classic
+       //TC01: testCalculateNormal classic
             Point newPoint = new Point(1, 2, 1);
             assertEquals(new Vector(0, 1 ,0),
                     sphere.getNormal(newPoint),

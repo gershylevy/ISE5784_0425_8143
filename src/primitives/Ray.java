@@ -1,4 +1,5 @@
 package primitives;
+import static primitives.Util.*;
 
 /**this class will represent a line that has direction and a beginning but no end point
  * @author netanel grossman
@@ -42,6 +43,18 @@ public class Ray {
      */
    public String toString() {
        return head.toString() + "," + direction.toString();
+   }
+
+
+    /**
+     *
+     * @param t The number that we find its distance down the Ray
+     * @return The Point that is t down the Ray
+     */
+   public Point getPoint(double t) {
+       if(isZero(t))
+           return this.head;
+       return (this.head.add(this.direction.scale(t)));
    }
 
 

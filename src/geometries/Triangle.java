@@ -38,7 +38,7 @@ public boolean isInTriangle(Point point){
 }
     @Override
     public List<Point> findIntersections(Ray ray) {
-        List<Point> pointList = new ArrayList<>(1);
+        List<Point> pointList;
          pointList = plane.findIntersections(ray);
         // check if in triangle
         if (this.isInTriangle(pointList.get(1)))

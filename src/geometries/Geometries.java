@@ -11,11 +11,12 @@ public class Geometries implements Intersectable {
     public Geometries() {}
 
     public Geometries(Intersectable... geometries) {
-
+      this.add(geometries);
     }
 
     public void add(Intersectable...geometries) {
-
+        for(int i=0;i<geometries.length ;i++){
+            this.Shapes.add(geometries[i]);}
     }
 
     @Override

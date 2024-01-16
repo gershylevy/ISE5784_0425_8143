@@ -123,15 +123,6 @@ class TriangleTest {
              "Intersection Points not as expected for Ray intersection with Triangle line");
 
 
-
-
-
-
-
-
-
-
-
  }
 
 }

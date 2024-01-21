@@ -3,6 +3,8 @@ package renderer;
 import primitives.*;
 import geometries.*;
 
+import java.util.MissingResourceException;
+
 /**
  * Camera class to represent a Camera in a Scene
  */
@@ -110,8 +112,6 @@ public class Camera implements Cloneable {
         }
 
         public Builder setDirection(Vector to, Vector up) {
-            if(to.dotProduct(up)==0)
-                throw new IllegalArgumentException ("to and up Vectors not orthogonal");
             camera.vTo = to.normalize();
             camera.vUp = up.normalize();
             return this;
@@ -126,6 +126,32 @@ public class Camera implements Cloneable {
         public Builder setViewPlaneDistance(double distance) {
             camera.viewPlaneDistance = distance;
             return this;
+        }
+
+        public Camera build() throws CloneNotSupportedException {
+            String cam=Camera.class.getName();
+            String error="Missing rendering data";
+            if(camera.p0==null)
+                throw new MissingResourceException(error,cam ,"Camera doesn't have starting Point");
+            if(camera.vTo==null)
+                throw new MissingResourceException(error,cam ,"Camera doesn't have direction");
+            if(camera.vUp==null)
+                throw new MissingResourceException(error,cam ,"Camera doesn't have Vector pointing up");
+            if(camera.vRight==null)
+                throw new MissingResourceException(error,cam ,"Camera doesn't have Vector pointing right");
+            if(Util.alignZero(camera.viewPlaneWidth)<=0)
+                throw new MissingResourceException(error,cam ,"View Plane can't have width of 0");
+            if(Util.alignZero(camera.viewPlaneHeight)<=0)
+                throw new MissingResourceException(error,cam ,"View Plane can't have height of 0");
+            if(Util.alignZero(camera.viewPlaneDistance)<=0)
+                throw new MissingResourceException(error,cam ,"View Plane can't have the distance of 0 from the Camera");
+
+            if (!Util.isZero(camera.vRight.dotProduct(camera.vTo)))
+                throw new IllegalArgumentException ("To and up Vectors not orthogonal");
+            camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
+            return (Camera) camera.clone();
+
+
         }
 
 

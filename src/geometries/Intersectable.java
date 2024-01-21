@@ -10,6 +10,12 @@ import java.util.List;
  */
 
 public interface Intersectable {
+
+    /**
+     * Function to find a shapes intersections with a Ray
+     * @param ray Ray that we find intersections with
+     * @return Intersection Points
+     */
     List<Point> findIntersections(Ray ray);
 
 }

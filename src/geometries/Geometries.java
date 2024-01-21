@@ -4,28 +4,53 @@ import primitives.Point;
 import primitives.Ray;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Geometries class to save list of Shapes
+ */
+
 public class Geometries implements Intersectable {
-    List<Intersectable> Shapes=List.of();
+    /**
+     * List of Shapes
+     */
+    List<Intersectable> Shapes= new LinkedList<>();
 
     public Geometries() {}
 
+    /**
+     * Constructor with a parameter
+     * @param geometries Shapes that are going to be on the list
+     */
     public Geometries(Intersectable... geometries) {
       this.add(geometries);
     }
 
+    /**
+     * Function to add Shapes to current list
+     * @param geometries Shapes that are going to be added on to the list
+     */
+
     public void add(Intersectable...geometries) {
-        for(int i=0;i<geometries.length ;i++){
-            this.Shapes.add(geometries[i]);}
+        this.Shapes.addAll(Arrays.stream(geometries).toList() );
     }
+
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-    List<Point> allIntersections=new ArrayList<Point>();
-    for (int i=0;i<Shapes.size();i++){
-        allIntersections.addAll(Shapes.get(i).findIntersections(ray));}
-    return allIntersections;
-    }
+        List<Point> result = null;
+        for (Intersectable item : Shapes) {
+            List<Point> allIntersections = item.findIntersections(ray);
+            if (allIntersections != null) {
+                if (result == null) {
+                    result = new LinkedList<>();  // Initialize the list
+                }
+                result.addAll(allIntersections);
+            }
 
+        }
+        return result;
+    }
 }

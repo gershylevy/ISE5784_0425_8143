@@ -45,7 +45,13 @@ class TriangleTest {
         assertEquals(0, result.dotProduct(p2.subtract(p3)),
                 "Normal is not orthogonal to the triangle");
     }
- public void testFindIntersections(Ray ray){
+
+
+    /**
+     * Test method for
+     * {@link geometries.Triangle#findIntersections(Ray)}
+     */
+    public void testFindIntersections(Ray ray){
 
      // ============ Equivalence Partitions Tests ==============
 

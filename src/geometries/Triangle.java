@@ -21,28 +21,29 @@ public class Triangle extends Polygon {
     public Triangle(Point point1,Point point2, Point point3){
         super(point1,point2,point3);
     }
-public boolean isInTriangle(Point point){
-        Vector v1 =vertices.get(0).subtract(plane.q);
-    Vector v2 = vertices.get(1).subtract(plane.q);
-    Vector v3 = vertices.get(2).subtract( plane.q);
 
-    Vector n1 = v1.crossProduct(v2).normalize();
-    Vector n2 = v2.crossProduct(v3).normalize();
-    Vector n3 = v3.crossProduct(v1).normalize();
-  double a= alignZero(plane.getNormal().dotProduct(n1));
-    double b= alignZero(plane.getNormal().dotProduct(n2));
-    double c= alignZero(plane.getNormal().dotProduct(n3));
-  if (a>0&b>0&c>0)
-      return true;
-    return a < 0 & b < 0 & c < 0;
-}
     @Override
     public List<Point> findIntersections(Ray ray) {
         List<Point> pointList;
          pointList = plane.findIntersections(ray);
+         if (pointList==null) return null;
+
+         Point point = pointList.get(0);
         // check if in triangle
-        if (this.isInTriangle(pointList.get(1)))
+        Vector v1 = vertices.get(0).subtract(ray.head);
+        Vector v2 = vertices.get(1).subtract(ray.head);
+        Vector v3 = vertices.get(2).subtract(ray.head);
+
+        Vector n1 = v1.crossProduct(v2).normalize();
+        Vector n2 = v2.crossProduct(v3).normalize();
+        Vector n3 = v3.crossProduct(v1).normalize();
+
+        double a= alignZero(ray.direction.dotProduct(n1));
+        double b= alignZero(ray.direction.dotProduct(n2));
+        double c= alignZero(ray.direction.dotProduct(n3));
+        if(a<0&&b<0&&c<0 || a>0&&b>0&&c>0)
             return pointList;
+
         return null;
     }
 }

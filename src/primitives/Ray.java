@@ -47,7 +47,7 @@ public class Ray {
 
 
     /**
-     *
+     * Function to find a Point a given distance down a Ray
      * @param t The number that we find its distance down the Ray
      * @return The Point that is t down the Ray
      */
@@ -56,6 +56,4 @@ public class Ray {
            return this.head;
        return (this.head.add(this.direction.scale(t)));
    }
-
-
 }

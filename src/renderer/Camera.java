@@ -103,7 +103,12 @@ public class Camera implements Cloneable {
 
         double xj=(j-(nX-1)/2)*rx;
         double yi=-(i-(nY-1)/2)*ry;
-        Point pij=pc.add(vRight.scale(xj).add(vUp.scale(yi)));
+        Point pij=pc;
+
+        if(xj!=0)
+            pij=pij.add(vRight.scale(xj));
+        if(yi!=0)
+            pij=pij.add(vUp.scale(yi));
 
         return new Ray(p0,pij.subtract(p0));
 
@@ -142,6 +147,7 @@ public class Camera implements Cloneable {
         public Camera build() throws CloneNotSupportedException {
             String cam=Camera.class.getName();
             String error="Missing rendering data";
+            camera.vRight=camera.vUp.crossProduct(camera.vTo);
                 if (camera.p0 == null)
                     throw new MissingResourceException(error, cam, "Camera doesn't have starting Point");
                 if (camera.vTo == null)

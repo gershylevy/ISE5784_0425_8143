@@ -2,7 +2,6 @@ package renderer;
 
 import primitives.*;
 import geometries.*;
-
 import java.util.MissingResourceException;
 
 /**
@@ -82,6 +81,7 @@ public class Camera implements Cloneable {
      */
     public double getViewPlaneDistance(){return viewPlaneDistance;}
 
+
     /**
      * Default constructor for Camera (private because we are using Builder Design Pattern)
      */
@@ -96,8 +96,19 @@ public class Camera implements Cloneable {
     public static Builder getBuilder() {return new Builder();}
 
     public Ray constructRay(int nX, int nY, int j, int i) {
-        return null;
+        Point pc=this.p0.add(this.vTo.scale(this.viewPlaneDistance));
+
+        double ry=this.viewPlaneHeight/nY;
+        double rx=this.viewPlaneWidth/nX;
+
+        double xj=(j-(nX-1)/2)*rx;
+        double yi=-(i-(nY-1)/2)*ry;
+        Point pij=pc.add(vRight.scale(xj).add(vUp.scale(yi)));
+
+        return new Ray(p0,pij.subtract(p0));
+
     }
+
 
 
     /**
@@ -123,7 +134,7 @@ public class Camera implements Cloneable {
             return this;
         }
 
-        public Builder setViewPlaneDistance(double distance) {
+        public Builder setVpDistance(double distance) {
             camera.viewPlaneDistance = distance;
             return this;
         }
@@ -131,24 +142,25 @@ public class Camera implements Cloneable {
         public Camera build() throws CloneNotSupportedException {
             String cam=Camera.class.getName();
             String error="Missing rendering data";
-            if(camera.p0==null)
-                throw new MissingResourceException(error,cam ,"Camera doesn't have starting Point");
-            if(camera.vTo==null)
-                throw new MissingResourceException(error,cam ,"Camera doesn't have direction");
-            if(camera.vUp==null)
-                throw new MissingResourceException(error,cam ,"Camera doesn't have Vector pointing up");
-            if(camera.vRight==null)
-                throw new MissingResourceException(error,cam ,"Camera doesn't have Vector pointing right");
-            if(Util.alignZero(camera.viewPlaneWidth)<=0)
-                throw new MissingResourceException(error,cam ,"View Plane can't have width of 0");
-            if(Util.alignZero(camera.viewPlaneHeight)<=0)
-                throw new MissingResourceException(error,cam ,"View Plane can't have height of 0");
-            if(Util.alignZero(camera.viewPlaneDistance)<=0)
-                throw new MissingResourceException(error,cam ,"View Plane can't have the distance of 0 from the Camera");
+                if (camera.p0 == null)
+                    throw new MissingResourceException(error, cam, "Camera doesn't have starting Point");
+                if (camera.vTo == null)
+                    throw new MissingResourceException(error, cam, "Camera doesn't have direction");
+                if (camera.vUp == null)
+                    throw new MissingResourceException(error, cam, "Camera doesn't have Vector pointing up");
+                if (camera.vRight == null)
+                    throw new MissingResourceException(error, cam, "Camera doesn't have Vector pointing right");
+                if (Util.alignZero(camera.viewPlaneWidth) <= 0)
+                    throw new MissingResourceException(error, cam, "View Plane can't have width of 0");
+                if (Util.alignZero(camera.viewPlaneHeight) <= 0)
+                    throw new MissingResourceException(error, cam, "View Plane can't have height of 0");
+                if (Util.alignZero(camera.viewPlaneDistance) <= 0)
+                    throw new MissingResourceException(error, cam, "View Plane can't have the distance of 0 from the Camera");
 
-            if (!Util.isZero(camera.vRight.dotProduct(camera.vTo)))
-                throw new IllegalArgumentException ("To and up Vectors not orthogonal");
-            camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
+                if (!Util.isZero(camera.vRight.dotProduct(camera.vTo)))
+                    throw new IllegalArgumentException("To and up Vectors not orthogonal");
+                camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
+
             return (Camera) camera.clone();
 
 

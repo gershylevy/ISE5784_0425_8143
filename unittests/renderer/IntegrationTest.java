@@ -11,9 +11,11 @@ public class IntegrationTest {
     int RayThruPixel(double CameraZ,Intersectable shape) {
         //Assume vp is 3x3 and distance is 1, vTo is (0,0,-1), vUp is (0,1,0), and that the camera is at (0,0,n)
         int intersections=0;
+        Ray r1;
         for(int i=-1;i<=1;i++){
             for(int j=-1;j<=1;j++){
-                Ray r1=new Ray(new Point(0,0,CameraZ),new Vector(i,j,CameraZ-1));
+                r1 = new Ray(new Point(0, 0, CameraZ), new Vector(i, j, - 1));
+
                 if(shape.findIntersections(r1)!=null)
                     intersections+=shape.findIntersections(r1).size();
             }
@@ -71,7 +73,7 @@ public class IntegrationTest {
 
         //TC08: Plane with 6 intersections
 
-        Plane p3=new Plane(new Point(5,-2,-1),new Point(4,-1,-2),new Point(4,3,-3));
+        Plane p3=new Plane(new Point(0,0,-30),new Point(0,-3,0),new Point(100,0,2));
         assertEquals(6,RayThruPixel(0,p3),badRay);
 
 

@@ -29,7 +29,8 @@ public class Ray {
      * @param obj different ray that we are checking if the same
      * @return one or zero depending on if equal
      */
-   public boolean equals(Ray obj) {
+   @Override
+   public boolean equals(Object obj) {
 
        if (this == obj) return true;
        return (obj instanceof Ray other)

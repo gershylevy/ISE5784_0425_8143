@@ -46,6 +46,7 @@ public class Camera implements Cloneable {
      */
     private double viewPlaneDistance=0;
 
+    private Point viewPlaneCenter;
     /**
      * Getter for p0
      */
@@ -95,15 +96,22 @@ public class Camera implements Cloneable {
 
     public static Builder getBuilder() {return new Builder();}
 
+    /**
+     * Function to construct Ray from Camera
+     * @param nX Resolution on the x-axis
+     * @param nY Resolution on the y-axis
+     * @param j Index of the x-axis
+     * @param i Index of the y-axis
+     * @return Ray that we constructed
+     */
     public Ray constructRay(int nX, int nY, int j, int i) {
-        Point pc=this.p0.add(this.vTo.scale(this.viewPlaneDistance));
 
         double ry=this.viewPlaneHeight/nY;
         double rx=this.viewPlaneWidth/nX;
 
-        double xj=(j-(nX-1)/2)*rx;
-        double yi=-(i-(nY-1)/2)*ry;
-        Point pij=pc;
+        double xj=(j-(nX-1)/2.0)*rx;
+        double yi=-(i-(nY-1)/2.0)*ry;
+        Point pij=viewPlaneCenter;
 
         if(xj!=0)
             pij=pij.add(vRight.scale(xj));
@@ -148,6 +156,10 @@ public class Camera implements Cloneable {
             String cam=Camera.class.getName();
             String error="Missing rendering data";
             camera.vRight=camera.vUp.crossProduct(camera.vTo);
+            camera.viewPlaneCenter= camera.p0.add(camera.vTo.scale(camera.viewPlaneDistance));
+
+
+
                 if (camera.p0 == null)
                     throw new MissingResourceException(error, cam, "Camera doesn't have starting Point");
                 if (camera.vTo == null)

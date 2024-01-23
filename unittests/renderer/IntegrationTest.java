@@ -25,56 +25,69 @@ public class IntegrationTest {
 
     @Test
     void SphereTest() throws CloneNotSupportedException {
-        String badRay="Bad Ray";
+        String badRay = "Bad Ray";
 
 
         //TC 01: Sphere with 2 intersections
 
-        Sphere s1=new Sphere(new Point(0,0,-3),1);
+        Sphere s1 = new Sphere(new Point(0, 0, -3), 1);
 
-        assertEquals(2,RayThruPixel(0,s1),badRay);
+        assertEquals(2, RayThruPixel(0, s1), badRay);
 
 
         //TC02: Sphere with 18 intersections
 
-        Sphere s2=new Sphere(new Point(0,0,-2.5),2.5);
-        assertEquals(18,RayThruPixel(0.5,s2),badRay);
+        Sphere s2 = new Sphere(new Point(0, 0, -2.5), 2.5);
+        assertEquals(18, RayThruPixel(0.5, s2), badRay);
 
 
         //TC03: Sphere with 10 intersections
 
-        Sphere s3=new Sphere(new Point(0,0,-2),2);
-        assertEquals(10,RayThruPixel(0.5,s3),badRay);
+        Sphere s3 = new Sphere(new Point(0, 0, -2), 2);
+        assertEquals(10, RayThruPixel(0.5, s3), badRay);
 
 
         //TC04: Sphere with 9 intersections
 
-        Sphere s4=new Sphere(new Point(0,0,0),4);
-        assertEquals(9,RayThruPixel(0.5,s4),badRay);
+        Sphere s4 = new Sphere(new Point(0, 0, 0), 4);
+        assertEquals(9, RayThruPixel(0.5, s4), badRay);
 
 
         //TC05: Sphere with 0 intersections
 
-        Sphere s5=new Sphere(new Point(0,0,1),0.5);
-        assertEquals(0,RayThruPixel(0,s5),badRay);
+        Sphere s5 = new Sphere(new Point(0, 0, 1), 0.5);
+        assertEquals(0, RayThruPixel(0, s5), badRay);
+
+
+    }
+
+
+    @Test
+    void PlaneTest() throws CloneNotSupportedException {
+        String badRay = "Bad Ray";
 
 
         //TC06: Plane with 9 intersections (orthogonal)
 
-        Plane p1=new Plane(new Point(0,0,-5),new Point(1,2,-5),new Point(4,3,-5));
-        assertEquals(9,RayThruPixel(0,p1),badRay);
+        Plane p1 = new Plane(new Point(0, 0, -5), new Point(1, 2, -5), new Point(4, 3, -5));
+        assertEquals(9, RayThruPixel(0, p1), badRay);
 
 
         //TC07: Plane with 9 intersections (non-orthogonal)
 
-        Plane p2=new Plane(new Point(5,-2,-1),new Point(1,2,-3),new Point(4,3,-3));
-        assertEquals(9,RayThruPixel(0,p2),badRay);
+        Plane p2 = new Plane(new Point(5, -2, -1), new Point(1, 2, -3), new Point(4, 3, -3));
+        assertEquals(9, RayThruPixel(0, p2), badRay);
 
 
         //TC08: Plane with 6 intersections
 
-        Plane p3=new Plane(new Point(0,0,-30),new Point(0,-3,0),new Point(100,0,2));
-        assertEquals(6,RayThruPixel(0,p3),badRay);
+        Plane p3 = new Plane(new Point(0, 0, -30), new Point(0, -3, 0), new Point(100, 0, 2));
+        assertEquals(6, RayThruPixel(0, p3), badRay);
+    }
+
+    @Test
+    void TriangleTest() throws CloneNotSupportedException {
+        String badRay = "Bad Ray";
 
 
         //TC09: Triangle with 1 intersection

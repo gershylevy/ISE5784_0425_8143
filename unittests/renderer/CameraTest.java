@@ -26,13 +26,13 @@ class CameraTest {
      * {@link renderer.Camera#constructRay(int, int, int, int)}.
      */
     @Test
-    void testConstructRay() throws CloneNotSupportedException {
+    void    testConstructRay() throws CloneNotSupportedException {
         final String badRay  = "Bad ray";
 
         // ============ Equivalence Partitions Tests ==============
         // EP01: 4X4 Inside (1,1)
         Camera camera1 = cameraBuilder.setVpSize(8, 8).build();
-        assertEquals(new Ray(new Point(0,0,0), new Vector(0, 0, -10)),
+        assertEquals(new Ray(new Point(0,0,0), new Vector(1, -1, -10)),
                 camera1.constructRay(4, 4, 1, 1), badRay);
 
         // =============== Boundary Values Tests ==================
@@ -41,7 +41,7 @@ class CameraTest {
                 camera1.constructRay(4, 4, 0, 0), badRay);
 
         // BV02: 4X4 Side (0,1)
-        assertEquals(new Ray(Point.ZERO, new Vector(1, -3, -10)),
+       assertEquals(new Ray(Point.ZERO, new Vector(1, -3, -10)),
                 camera1.constructRay(4, 4, 1, 0), badRay);
 
         // BV03: 3X3 Center (1,1)

@@ -2,6 +2,8 @@ package renderer;
 
 import primitives.*;
 import geometries.*;
+
+import java.awt.image.BufferedImage;
 import java.util.MissingResourceException;
 
 /**
@@ -47,6 +49,19 @@ public class Camera implements Cloneable {
     private double viewPlaneDistance=0;
 
     private Point viewPlaneCenter;
+
+    private ImageWriter imageWriter;
+
+    public ImageWriter getImageWriter() {
+        return imageWriter;
+    }
+
+    private RayTracerBase rayTracer;
+
+    public RayTracerBase getRayTracer() {
+        return rayTracer;
+    }
+
     /**
      * Getter for p0
      */
@@ -122,6 +137,35 @@ public class Camera implements Cloneable {
 
     }
 
+    public void printGrid(int interval,Color color){
+        for(int i=0;i<this.viewPlaneWidth;i+=interval)
+            for(int j=0;j<this.viewPlaneHeight;j+=1)
+                this.imageWriter.writePixel(i,j,color);
+
+
+        for(int i=0;i<this.viewPlaneHeight;i+=interval)
+            for(int j=0;j<this.viewPlaneWidth;j+=1)
+                this.imageWriter.writePixel(j,i,color);
+    }
+
+
+    public void renderImage(){
+        for (double i=0;i<this.getViewPlaneWidth();i++)
+            for(double j=0;j<this.getViewPlaneHeight();j++)
+                this.castRay((int) Math.round(getViewPlaneWidth()),(int) Math.round(getViewPlaneHeight()),(int) Math.round(i),(int) Math.round(j));
+    }
+
+    public void writeToImage(){
+        this.imageWriter.writeToImage();
+    }
+    public Ray castRay(int Nx,int Ny,int indexI,int indexT)
+    {
+        Ray ray=this.constructRay(Nx,Ny,indexI,indexT);
+        Color color= this.rayTracer.traceRay(ray);
+        this.imageWriter.writePixel(indexI,indexT,color);
+        return ray;
+    }
+
 
 
     /**
@@ -129,6 +173,13 @@ public class Camera implements Cloneable {
      */
     public static class Builder{
         private final Camera camera = new Camera();
+
+        public Builder setImageWriter(int Horizontal, int Vertical, String imageName) throws CloneNotSupportedException {
+            Camera.Builder cameraBuilder = Camera.getBuilder();
+            Camera cam1=cameraBuilder.build();
+            cam1.imageWriter=new ImageWriter(imageName,Vertical,Horizontal);
+            return this;
+        }
 
         public Builder setLocation(Point location) {
             camera.p0 = location;
@@ -149,6 +200,16 @@ public class Camera implements Cloneable {
 
         public Builder setVpDistance(double distance) {
             camera.viewPlaneDistance = distance;
+            return this;
+        }
+
+        public Builder setImageWriter(ImageWriter imageWriter) {
+            camera.imageWriter = imageWriter;
+            return this;
+        }
+
+        public Builder setRayTracer(RayTracerBase rayTracer) {
+            camera.rayTracer = rayTracer;
             return this;
         }
 
@@ -174,6 +235,10 @@ public class Camera implements Cloneable {
                     throw new MissingResourceException(error, cam, "View Plane can't have height of 0");
                 if (Util.alignZero(camera.viewPlaneDistance) <= 0)
                     throw new MissingResourceException(error, cam, "View Plane can't have the distance of 0 from the Camera");
+                if(camera.imageWriter==null)
+                    throw new MissingResourceException(error, cam, "Missing ImageWriter in Camera");
+                if(camera.rayTracer==null)
+                    throw new MissingResourceException(error, cam, "Missing RayTracer in Camera");
 
                 if (!Util.isZero(camera.vRight.dotProduct(camera.vTo)))
                     throw new IllegalArgumentException("To and up Vectors not orthogonal");
@@ -184,9 +249,6 @@ public class Camera implements Cloneable {
 
         }
 
-
-
     }
-
 
 }

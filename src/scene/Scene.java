@@ -76,6 +76,4 @@ public class Scene {
         return this;
     }
 
-
-
 }

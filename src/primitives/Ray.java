@@ -1,4 +1,6 @@
 package primitives;
+import java.util.List;
+
 import static primitives.Util.*;
 
 /**this class will represent a line that has direction and a beginning but no end point
@@ -57,4 +59,22 @@ public class Ray {
            return this.head;
        return (this.head.add(this.direction.scale(t)));
    }
+
+   public Point findClosestPoint(List<Point> pointList) {
+
+       if(pointList.isEmpty())
+           return null;
+
+       Point closest=pointList.getFirst();
+       double distance=pointList.getFirst().distance(this.head);
+
+       for(Point item:pointList) {
+           if(item.distance(this.head)<distance) {
+               closest = item;
+               distance=item.distance(this.head);
+           }
+       }
+       return closest;
+   }
+
 }

@@ -36,12 +36,12 @@ public class Camera implements Cloneable {
     /**
      * Width of the View Plane
      */
-    private double viewPlaneWidth=0;
+    private int viewPlaneWidth=0;
 
     /**
      * Width of the View Plane
      */
-    private double viewPlaneHeight=0;
+    private int viewPlaneHeight=0;
 
     /**
      * Distance of the View Plane from the Camera
@@ -137,6 +137,12 @@ public class Camera implements Cloneable {
 
     }
 
+    /**
+     * Function to draw a grid on the Image
+     * @param interval Distance between the lines of the grid
+     * @param color Color of the grid
+     */
+
     public void printGrid(int interval,Color color){
         for(int i=0;i<this.viewPlaneWidth;i+=interval)
             for(int j=0;j<this.viewPlaneHeight;j+=1)
@@ -148,22 +154,38 @@ public class Camera implements Cloneable {
                 this.imageWriter.writePixel(j,i,color);
     }
 
+    /**
+     * Function to Render the Image
+     */
 
-    public void renderImage(){
-        for (double i=0;i<this.getViewPlaneWidth();i++)
-            for(double j=0;j<this.getViewPlaneHeight();j++)
-                this.castRay((int) Math.round(getViewPlaneWidth()),(int) Math.round(getViewPlaneHeight()),(int) Math.round(i),(int) Math.round(j));
+    public void renderImage() {
+        int nX = this.imageWriter.getNx();
+        int nY = this.imageWriter.getNy();
+        for (int i=0;i<nX;i++)
+            for(int j=0;j<nY;j++)
+                this.castRay(nX,nY,i,j);
     }
+
+    /**
+     * Function to Make Image
+     */
 
     public void writeToImage(){
         this.imageWriter.writeToImage();
     }
-    public Ray castRay(int Nx,int Ny,int indexI,int indexT)
+
+    /**
+     * Function to cast Ray through the center of a pixel
+     * @param Nx Resolution on the x-axis
+     * @param Ny Resolution on the y-axis
+     * @param indexI Index on the x-axis
+     * @param indexT Index on the y-axis
+     */
+
+    private void castRay(int Nx,int Ny,int indexI,int indexT)
     {
         Ray ray=this.constructRay(Nx,Ny,indexI,indexT);
-        Color color= this.rayTracer.traceRay(ray);
-        this.imageWriter.writePixel(indexI,indexT,color);
-        return ray;
+        this.imageWriter.writePixel(indexI,indexT,this.rayTracer.traceRay(ray));
     }
 
 
@@ -181,10 +203,21 @@ public class Camera implements Cloneable {
             return this;
         }
 
+        /**
+         * Funciton to set location of Camera
+         * @param location new location
+         */
+
         public Builder setLocation(Point location) {
             camera.p0 = location;
             return this;
         }
+
+        /**
+         * Function to set Direction on Camera
+         * @param to New Vto for the Camera
+         * @param up New Vup for the Camera
+         */
 
         public Builder setDirection(Vector to, Vector up) {
             camera.vTo = to.normalize();
@@ -192,26 +225,52 @@ public class Camera implements Cloneable {
             return this;
         }
 
-        public Builder setVpSize(double width, double height) {
+        /**
+         * Function to set view plane size
+         * @param width New width of the view plane
+         * @param height New height of the view plane
+         */
+
+        public Builder setVpSize(int width, int height) {
             camera.viewPlaneWidth = width;
             camera.viewPlaneHeight = height;
             return this;
         }
+
+        /**
+         * Function to set view plane distance
+         * @param distance New distance of the view plane
+         */
 
         public Builder setVpDistance(double distance) {
             camera.viewPlaneDistance = distance;
             return this;
         }
 
+        /**
+         * Function to set image writer
+         * @param imageWriter New image writer
+         */
+
         public Builder setImageWriter(ImageWriter imageWriter) {
             camera.imageWriter = imageWriter;
             return this;
         }
 
+        /**
+         * Function to set ray tracer
+         * @param rayTracer New ray tracer
+         */
+
         public Builder setRayTracer(RayTracerBase rayTracer) {
             camera.rayTracer = rayTracer;
             return this;
         }
+
+        /**
+         * Function to build a Camera (because we are using builder design patter)
+         * @return The build Camera
+         */
 
         public Camera build() throws CloneNotSupportedException {
             String cam=Camera.class.getName();

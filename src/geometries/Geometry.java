@@ -1,16 +1,33 @@
 package geometries;
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
-import primitives.Vector;
 
 /**
  * Abstract class Geometry represents three-dimensional shapes in 3D Cartesian coordinate
  * system
  */
 
-public abstract interface Geometry extends Intersectable {
+public abstract class Geometry extends Intersectable {
+
+    /**
+     * Color emission of the shape
+     */
+    protected Color emission=Color.BLACK;
+
+    /**
+     * Getter for emission
+     * @return The emission for the Shape
+     */
+
+    public Color getEmission() {
+        return emission;
+    }
+
+    public Geometry setEmission(Color emission) {
+        this.emission = emission;
+        return this;
+
+    }
 
     /**
      * Abstract function (meant to be overridden by sons) to return the normal

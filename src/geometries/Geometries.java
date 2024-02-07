@@ -12,7 +12,7 @@ import java.util.List;
  * Geometries class to save list of Shapes
  */
 
-public class Geometries implements Intersectable {
+public abstract class Geometries extends Intersectable {
     /**
      * List of Shapes
      */

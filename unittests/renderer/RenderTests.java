@@ -41,8 +41,7 @@ public class RenderTests {
       // right
       camera
          .setImageWriter(new ImageWriter("base render test", 1000, 1000))
-         .build().
-              renderImage();
+         .build().renderImage();
       camera.build().printGrid(100, new Color(YELLOW));
       camera.build().writeToImage();
    }

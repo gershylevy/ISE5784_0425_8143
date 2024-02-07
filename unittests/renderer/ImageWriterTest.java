@@ -31,7 +31,15 @@ class ImageWriterTest {
             for(int j=0;j<800;j++)
                 camera1.getImageWriter().writePixel(i,j,col);
 
-        camera1.printGrid(50,new Color(0,0,0));
+        for(int i=0;i<camera1.getViewPlaneWidth();i+=50)
+            for(int j=0;j<camera1.getViewPlaneHeight();j+=1)
+                camera1.getImageWriter().writePixel(i,j,Color.BLACK);
+
+        for(int i=0;i<camera1.getViewPlaneHeight();i+=50)
+            for(int j=0;j<camera1.getViewPlaneWidth();j+=1)
+                camera1.getImageWriter().writePixel(j,i,Color.BLACK);
+
+
         camera1.getImageWriter().writeToImage();
 
     }

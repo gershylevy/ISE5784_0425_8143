@@ -20,6 +20,7 @@ public class LightsTests {
    /** Second scene for some of tests */
    private final Scene          scene2                  = new Scene("Test scene").setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
 
+
    /** First camera builder for some of tests */
    private final Camera.Builder camera1                 = Camera.getBuilder()
       .setRayTracer(new SimpleRayTracer(scene1))

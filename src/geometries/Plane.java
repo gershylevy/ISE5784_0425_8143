@@ -11,7 +11,7 @@ import static primitives.Util.*;
  * Plane class represents two-dimensional plane in 3D Cartesian coordinate
  * system
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
 
     /**
      * the point from which we calculate the Plane
@@ -52,6 +52,7 @@ public class Plane implements Geometry {
      * @return the normal of the Plane (Vector)
      */
 
+
     public Vector getNormal() { return normal; }
 
     /**
@@ -59,21 +60,20 @@ public class Plane implements Geometry {
      * @param val not used for now
      * @return the normal of the Plane (Vector)
      */
-
+    @Override
     public Vector getNormal(Point val) {
         return normal;
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         if(isZero(this.normal.dotProduct(ray.direction)))
             return null;
         if(this.q.equals(ray.head))
             return null;
         double t=alignZero(this.normal.dotProduct(this.q.subtract(ray.head)))/(this.normal.dotProduct(ray.direction));
         if(t>0) {
-            final var pointList=List.of(ray.getPoint(t));
-            return pointList;
+            return List.of(new GeoPoint(this,ray.getPoint(t)));
         }
         return null;
     }

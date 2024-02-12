@@ -5,6 +5,9 @@ import primitives.*;
 import lighting.*;
 import renderer.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Class to represent a Scene
  */
@@ -31,6 +34,12 @@ public class Scene {
     public AmbientLight ambientLight=AmbientLight.NONE;
 
     /**
+     * List of all lights
+     */
+
+    public List<LightSource> lights=new LinkedList<>();
+
+    /**
      * List of Geometries in the Scene
      */
 
@@ -50,8 +59,9 @@ public class Scene {
      * @param background The new Background
      */
 
-    public void setBackground(Color background) {
+    public Scene setBackground(Color background) {
         this.background = background;
+        return this;
     }
 
     /**
@@ -59,8 +69,9 @@ public class Scene {
      * @param ambientLight The new Ambient Light
      */
 
-    public void setAmbientLight(AmbientLight ambientLight) {
+    public Scene setAmbientLight(AmbientLight ambientLight) {
         this.ambientLight = ambientLight;
+        return this;
     }
 
     /**
@@ -68,9 +79,24 @@ public class Scene {
      * @param geometries The new list of Geometries
      */
 
-    public void setGeometries(Geometries geometries) {
+    public Scene setGeometries(Geometries geometries) {
         this.geometries = geometries;
+        return this;
     }
+
+    /**
+     * Setter for Lights
+     * @param lights Our new List of all the Lights
+     */
+
+    public Scene setLights(List<LightSource> lights) {
+        this.lights = lights;
+        return this;
+    }
+
+    /**
+     * Builder function
+     */
 
     public Scene Builder(){
         return this;

@@ -23,12 +23,12 @@ public class Triangle extends Polygon {
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        List<Point> pointList;
-         pointList = plane.findIntersections(ray);
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> pointList;
+         pointList = plane.findGeoIntersectionsHelper(ray);
          if (pointList==null) return null;
 
-         Point point = pointList.get(0);
+         Point point = pointList.get(0).point;
         // check if in triangle
         Vector v1 = vertices.get(0).subtract(ray.head);
         Vector v2 = vertices.get(1).subtract(ray.head);

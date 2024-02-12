@@ -9,13 +9,9 @@ import renderer.*;
  * Class to represent Ambient Lighting
  */
 
-public class AmbientLight {
+public class AmbientLight extends Light{
 
-    /**
-     * Intensity of the Lighting on Point
-     */
 
-    private final Color intensity;
 
     /**
      * Constructor for Ambient Light
@@ -23,9 +19,10 @@ public class AmbientLight {
      * @param ka Ambient Light coefficient, a constant factor that determines the strength of the Ambient Light (Double3)
      */
 
-    public AmbientLight(Color ia,Double3 ka){
-        this.intensity=new Color(ia.scale(ka).getColor());
+    public AmbientLight(Color ia, Double3 ka){
+        super(new Color(ia.scale(ka).getColor()));
     }
+
 
     /**
      * Constructor for Ambient Light
@@ -34,7 +31,7 @@ public class AmbientLight {
      */
 
     public AmbientLight(Color ia, double ka){
-        this.intensity=new Color(ia.scale(ka).getColor());
+        super(new Color(ia.scale(ka).getColor()));
     }
 
     /**
@@ -43,12 +40,4 @@ public class AmbientLight {
 
     public static AmbientLight NONE=new AmbientLight(Color.BLACK,0);
 
-    /**
-     * Getter for intensity
-     * @return our intensity
-     */
-
-    public Color getIntensity() {
-        return intensity;
-    }
 }

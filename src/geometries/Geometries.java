@@ -12,7 +12,7 @@ import java.util.List;
  * Geometries class to save list of Shapes
  */
 
-public abstract class Geometries extends Intersectable {
+public class Geometries extends Intersectable {
     /**
      * List of Shapes
      */
@@ -39,10 +39,10 @@ public abstract class Geometries extends Intersectable {
 
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        List<Point> result = null;
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> result = null;
         for (Intersectable item : Shapes) {
-            List<Point> allIntersections = item.findIntersections(ray);
+            List<GeoPoint> allIntersections = item.findGeoIntersectionsHelper(ray);
             if (allIntersections != null) {
                 if (result == null) {
                     result = new LinkedList<>();  // Initialize the list

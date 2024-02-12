@@ -90,7 +90,7 @@ public class Ray {
 
         for(Intersectable.GeoPoint item:pointList) {
             if(item.point.distance(this.head)<distance) {
-                closest.point = item.point;
+                closest = item;
                 distance=item.point.distance(this.head);
             }
         }

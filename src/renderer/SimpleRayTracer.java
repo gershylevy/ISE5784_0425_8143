@@ -16,6 +16,7 @@ public class SimpleRayTracer extends RayTracerBase {
 
     /**
      * C-tor for simple Ray tracer
+     *
      * @param newScene The new Scene
      */
 
@@ -24,19 +25,28 @@ public class SimpleRayTracer extends RayTracerBase {
     }
 
 
-   @Override
+    @Override
     public Color traceRay(Ray ray) {
         List<Intersectable.GeoPoint> scenePoints
-                =scene.geometries.findGeoIntersections(ray);
-        if (scenePoints==null)
+                = scene.geometries.findGeoIntersections(ray);
+        if (scenePoints == null)
             return scene.background;
-        Intersectable.GeoPoint closePoint= ray.findClosestGeoPoint(scenePoints);
-        return this.calcColor(closePoint,ray);
+        Intersectable.GeoPoint closePoint = ray.findClosestGeoPoint(scenePoints);
+        return this.calcColor(closePoint, ray);
     }
+
     private Color calcColor(Intersectable.GeoPoint intersection, Ray ray) {
+        return scene.ambientLight.getIntensity().add(intersection.geometry.getEmission());
+    }
+}
+
+ /*   private Color calcColor(Intersectable.GeoPoint intersection, Ray ray) {
         return scene.ambientLight.getIntensity()
                 .add(calcLocalEffects(intersection, ray));
     }
+
+
+
 
     private Color calcLocalEffects(Intersectable.GeoPoint gp, Ray ray) {
         Vector n = gp.geometry.getNormal(gp.point);
@@ -66,4 +76,4 @@ public class SimpleRayTracer extends RayTracerBase {
         return material.kS.scale(Math.pow(Math.max(0,-n.dotProduct(l)),nl));
     }
 }
-
+*/

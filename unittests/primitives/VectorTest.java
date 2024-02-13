@@ -301,15 +301,4 @@ class VectorTest {
         assertThrows(IllegalArgumentException.class, () -> new Vector(temp), "Didn't throw Vector equals 0");
 
     }
-
-
-
-
-
-
-
-
-
-
-
 }

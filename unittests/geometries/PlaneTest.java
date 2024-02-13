@@ -160,7 +160,5 @@ class PlaneTest {
         assertNull(expectedResult9,
                 "Amount of intersections incorrect for Ray begins on q of the Plane");
 
-
     }
-
 }

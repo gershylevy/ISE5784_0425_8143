@@ -255,7 +255,5 @@ class SphereTest {
         assertTrue(expectedResult17.contains(new Point(sqrt(3),1,1)),
                 "Intersection Point not as expected for Ray's line is inside, Ray is orthogonal to Ray start to Sphere's center line");
 
-
     }
-
 }

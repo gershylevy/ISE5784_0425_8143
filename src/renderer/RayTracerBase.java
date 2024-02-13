@@ -19,7 +19,6 @@ public abstract class RayTracerBase {
      * C-tor for Ray tracer base
      * @param newScene Our new Scene
      */
-
     public RayTracerBase(Scene newScene) {
         this.scene=newScene;
     }
@@ -29,6 +28,5 @@ public abstract class RayTracerBase {
      * @param ray Ray to find Color at the end
      * @return The Color at the end
      */
-
     public abstract Color traceRay(Ray ray);
 }

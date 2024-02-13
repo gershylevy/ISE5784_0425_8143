@@ -108,5 +108,4 @@ public class Vector extends Point {
         if (this == compare) return true;
         return (compare instanceof Vector other) && super.equals(other);
     }
-
 }

@@ -48,13 +48,25 @@ public class Camera implements Cloneable {
      */
     private double viewPlaneDistance=0;
 
+    /**
+     * Center Point of the VP
+     */
+
     private Point viewPlaneCenter;
+
+    /**
+     * ImageWriter field
+     */
 
     private ImageWriter imageWriter;
 
     public ImageWriter getImageWriter() {
         return imageWriter;
     }
+
+    /**
+     * RayTracer field
+     */
 
     private RayTracerBase rayTracer;
 
@@ -307,7 +319,5 @@ public class Camera implements Cloneable {
 
 
         }
-
     }
-
 }

@@ -96,6 +96,5 @@ class RayTest {
         assertEquals(new Point(0,0,1),r1.findClosestPoint(pointList4),
                 "Find closest Point for end of list failed");
 
-
     }
 }

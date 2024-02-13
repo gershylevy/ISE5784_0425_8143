@@ -24,7 +24,7 @@ public class Scene {
      * Background Color of the Scene
      */
 
-    public Color background;
+    public Color background=Color.BLACK;
 
     /**
      * Ambient Light in the Scene (default Black)
@@ -101,5 +101,4 @@ public class Scene {
     public Scene Builder(){
         return this;
     }
-
 }

@@ -42,7 +42,7 @@ public class Geometries extends Intersectable {
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         List<GeoPoint> result = null;
         for (Intersectable item : Shapes) {
-            List<GeoPoint> allIntersections = item.findGeoIntersectionsHelper(ray);
+            List<GeoPoint> allIntersections = item.findGeoIntersections(ray);
             if (allIntersections != null) {
                 if (result == null) {
                     result = new LinkedList<>();  // Initialize the list

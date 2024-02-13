@@ -17,6 +17,4 @@ public abstract class RadialGeometry extends Geometry {
     protected RadialGeometry(double newRadius) {
         this.radius=newRadius;
     }
-
-
 }

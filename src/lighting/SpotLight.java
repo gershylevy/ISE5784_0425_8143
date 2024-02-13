@@ -37,33 +37,19 @@ public class SpotLight extends PointLight {
         return this;
     }
 
-    /**
-     * Setter for kC
-     * @param kC Our new kC
-     * @return Return this for chained setters
-     */
+
     @Override
     public PointLight setkC(double kC) {
         super.setkC(kC);
         return this;
     }
 
-    /**
-     * Setter for kL
-     * @param kL Our new kL
-     * @return Return this for chained setters
-     */
     @Override
     public PointLight setkL(double kL) {
         super.setkL(kL);
         return this;
     }
 
-    /**
-     * Setter for kQ
-     * @param kQ Our new kQ
-     * @return Return this for chained setters
-     */
 
     @Override
     public PointLight setkQ(double kQ) {
@@ -75,6 +61,4 @@ public class SpotLight extends PointLight {
     public Color getIntensity(Point point) {
         return (this.intensity.scale(Math.max(0,this.direction.dotProduct(point.subtract(this.position).normalize())))).scale(1/this.DistanceHelper(point));
     }
-
-
 }

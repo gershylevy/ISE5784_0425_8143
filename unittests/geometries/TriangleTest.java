@@ -128,7 +128,5 @@ class TriangleTest {
      assertTrue(expectedResult6.contains(new Point(0,1,1)),
              "Intersection Points not as expected for Ray intersection with Triangle line");
 
-
  }
-
 }

@@ -41,6 +41,5 @@ class ImageWriterTest {
 
 
         camera1.getImageWriter().writeToImage();
-
     }
 }

@@ -91,6 +91,4 @@ public class Point {
     public Double distance(Point point2) {
         return sqrt(this.distanceSquared(point2));
     }
-
-
 }

@@ -79,5 +79,4 @@ public class Material {
         this.shininess=shininess;
         return this;
     }
-
 }

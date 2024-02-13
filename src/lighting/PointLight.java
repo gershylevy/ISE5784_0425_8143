@@ -87,11 +87,6 @@ public class PointLight extends Light implements LightSource {
         return (kC+kL* position.distance(point)+kQ* position.distanceSquared(point));
     }
 
-    /**
-     * Helper function
-     */
-
-
 
     @Override
     public Vector getL(Point p) {

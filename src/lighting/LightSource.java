@@ -15,9 +15,9 @@ public interface LightSource {
     public Color getIntensity(Point p);
 
     /**
-     * Function to get L at a given Point (returns Vector)
-     * @param p The given Point to get L at
-     * @return The L at the Point
+     * Function to get L from a given Point (returns Vector)
+     * @param p The given Point to get L from
+     * @return The L from the Point
      */
     public Vector getL(Point p);
 }

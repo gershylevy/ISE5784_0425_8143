@@ -78,9 +78,5 @@ class GeometriesTest {
         final var pointList13=testGeometries3.findIntersections(new Ray(new Point(0,-1,0),new Vector(0,1,0)));
         final var expectedResult13=List.of(p1,p1,p1);
         assertEquals(expectedResult13,pointList13,"failed all shapes intersect");
-
-
-
-
     }
 }

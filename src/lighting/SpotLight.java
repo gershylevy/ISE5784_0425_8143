@@ -32,7 +32,7 @@ public class SpotLight extends PointLight {
      * @return Return this for chained setters
      */
 
-    public SpotLight setDirection(Vector direction) {
+    public PointLight setDirection(Vector direction) {
         this.direction = direction;
         return this;
     }
@@ -57,8 +57,12 @@ public class SpotLight extends PointLight {
         return this;
     }
 
+
     @Override
     public Color getIntensity(Point point) {
-        return (this.intensity.scale(Math.max(0,this.direction.dotProduct(point.subtract(this.position).normalize())))).scale(1/this.DistanceHelper(point));
+        double proj=direction.normalize().dotProduct(getL(point));
+        double factor=Math.max(0,proj);
+        factor=Math.pow(factor,NarrowBeam);
+        return super.getIntensity(point).scale(factor);
     }
 }

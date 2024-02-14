@@ -14,6 +14,20 @@ public class PointLight extends Light implements LightSource {
     Point position;
 
     /**
+     * Narrow beam
+     */
+    protected double NarrowBeam=1;
+
+    /**
+     * Setter for Narrow beam
+     * @param narrowBeam New Narrow beam val
+     */
+    public PointLight setNarrowBeam(double narrowBeam) {
+        NarrowBeam = narrowBeam;
+        return this;
+    }
+
+    /**
      * Factors for attenuation with distance
      */
 
@@ -76,20 +90,18 @@ public class PointLight extends Light implements LightSource {
 
     @Override
     public Color getIntensity(Point point) {
-        return this.intensity.scale(1/DistanceHelper(point));
+        return intensity.scale(1/(kC+kL*position.distance(point)+kQ*position.distanceSquared(point)));
     }
 
     /**
      * Helper function to not go over DRY
      */
 
-    public double DistanceHelper(Point point){
-        return (kC+kL* position.distance(point)+kQ* position.distanceSquared(point));
-    }
+
 
 
     @Override
     public Vector getL(Point p) {
-        return p.subtract(this.position).normalize();
+        return p.subtract(position).normalize();
     }
 }

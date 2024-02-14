@@ -181,7 +181,37 @@ public class LightsTests {
          camera1.build().writeToImage();
    }
 
- /*  Produce a picture of two triangles lighted by a narrow spotlight
+   @Test
+    public void Test1() throws CloneNotSupportedException {
+        scene2.geometries.add(triangle1, triangle2);
+        scene2.lights.add(new SpotLight(trianglesLightColor, trianglesLightPosition, trianglesLightDirection)
+                .setkL(0.001).setkQ(0.0001));
+        scene2.lights.add(new DirectionalLight(new Color(1000,600,600),new Vector(0,100,0)));
+        scene2.lights.add(new PointLight(new Color(600,200,300),new Vector(50,4,-10)));
+
+        camera2.setImageWriter(new ImageWriter("Test1", 500, 500))
+                .build()
+                .renderImage();
+        camera2.build().writeToImage();
+    }
+
+   @Test
+   public void Test2() throws CloneNotSupportedException {
+      scene2.geometries.add(sphere);
+      scene2.lights.add(new SpotLight(trianglesLightColor, new Point(0,150,-50), new Vector(0,1,-50))
+              .setkL(0.001).setkQ(0.0001));
+      scene2.lights.add(new DirectionalLight(new Color(100,100,100),new Vector(0,100,-50)));
+      scene2.lights.add(new PointLight(new Color(100,100,100),new Vector(0,100,-10)));
+
+      camera2.setImageWriter(new ImageWriter("Test2", 500, 500))
+              .build()
+              .renderImage();
+      camera2.build().writeToImage();
+   }
+
+
+
+//   Produce a picture of two triangles lighted by a narrow spotlight
    @Test
    public void trianglesSpotSharp() throws CloneNotSupportedException {
       scene2.geometries.add(triangle1, triangle2);
@@ -193,5 +223,5 @@ public class LightsTests {
          .renderImage();
          camera2.build().writeToImage();
    }
-*/
+
 }

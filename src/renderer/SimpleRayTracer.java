@@ -26,11 +26,9 @@ public class SimpleRayTracer extends RayTracerBase {
 
     @Override
     public Color traceRay(Ray ray) {
-        List<Intersectable.GeoPoint> scenePoints
-                = scene.geometries.findGeoIntersectionsHelper(ray);
-        if (scenePoints == null)
-            return scene.background;
-        return calcColor((ray.findClosestGeoPoint(scenePoints)),ray);
+        List<Intersectable.GeoPoint> pointList = scene.geometries.findGeoIntersections(ray);
+        if(pointList == null){return scene.background;}
+        return calcColor(ray.findClosestGeoPoint(pointList), ray);
     }
 
 
@@ -41,7 +39,7 @@ public class SimpleRayTracer extends RayTracerBase {
      * @return Color of Shape at the intersection Point
      */
     private Color calcColor(Intersectable.GeoPoint intersection, Ray ray) {
-        return scene.ambientLight.getIntensity()//.add(intersection.geometry.getEmission());
+        return scene.ambientLight.getIntensity()
                 .add(calcLocalEffects(intersection, ray));
     }
 
@@ -52,19 +50,22 @@ public class SimpleRayTracer extends RayTracerBase {
      * @return Reflection Color
      */
     private Color calcLocalEffects(Intersectable.GeoPoint gp, Ray ray) {
-        Color color = gp.geometry.getEmission();
+        // +iE
+        Color color= gp.geometry.getEmission();
         Vector n = gp.geometry.getNormal(gp.point);
         Vector v = ray.direction;
-        double nv = alignZero(n.dotProduct(v));
-        if (nv == 0)
+        double nv= alignZero(n.dotProduct(v));
+        if (nv== 0)
             return color;
-        Material mat = gp.geometry.getMaterial();
-        for (LightSource lightSource : scene.lights) {
+        Material material = gp.geometry.getMaterial();
+        for (LightSource lightSource: scene.lights) {
             Vector l = lightSource.getL(gp.point);
-            double nl = alignZero(n.dotProduct(l));
-            if (nl * nv > 0) { // sign(nl) == sign(nv)
-                Color iL = lightSource.getIntensity(gp.point);
-                color = color.add(iL.scale(calcDiffusive(mat, nl).add(calcSpecular(mat, n, l, nl, v))));
+            //lI*n
+            double nl= alignZero(n.dotProduct(l));
+            if (nl* nv> 0) {
+                Color iL= lightSource.getIntensity(gp.point);
+                color = color.add(iL.scale(calcDiffusive(material, nl)
+                        .add(calcSpecular(material, n, l, nl, v))));
             }
         }
         return color;
@@ -76,8 +77,7 @@ public class SimpleRayTracer extends RayTracerBase {
      * @param nl Dot product of normal and the Vector connecting the Shape and the Light
      * @return Diffusive reflection change
      */
-    private static Double3 calcDiffusive(Material material,double nl)
-    {
+    private static Double3 calcDiffusive(Material material,double nl) {
         return material.kD.scale(Math.abs(nl));
     }
 
@@ -91,13 +91,10 @@ public class SimpleRayTracer extends RayTracerBase {
      * @return Specular reflection change
      */
 
-    private static Double3 calcSpecular(Material material, Vector n, Vector l, double nl,Vector v) {
-        Vector r=l.subtract(n.scale(nl*2));
-       Double3 spec=material.kS.scale(Math.max(0,v.scale(-1).dotProduct(r)));
+    private Double3 calcSpecular(Material material, Vector n, Vector l, double nl, Vector v){
 
-       for(int i=0;i< material.shininess;i++)
-           spec=spec.product(spec);
-
-        return spec;
+        return material.kS.scale(
+                Math.pow(
+                        Math.max(0, v.scale(-1).dotProduct(l.subtract(n.scale(nl*2)))),material.shininess));
     }
 }

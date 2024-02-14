@@ -23,26 +23,23 @@ public class Triangle extends Polygon {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        List<GeoPoint> pointList;
-         pointList = plane.findGeoIntersectionsHelper(ray);
-         if (pointList==null) return null;
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
+        // check with plane first
+        List<Point> planeIntersections = plane.findIntersections(ray);
+        if (planeIntersections == null)
+            return null;
 
-         Point point = pointList.get(0).point;
-        // check if in triangle
-        Vector v1 = vertices.get(0).subtract(ray.head);
-        Vector v2 = vertices.get(1).subtract(ray.head);
-        Vector v3 = vertices.get(2).subtract(ray.head);
+        double a1 = alignZero(ray.direction.dotProduct(vertices.getFirst().subtract(ray.head).crossProduct(vertices.get(1).subtract(ray.head))));
+        double a2 = alignZero(ray.direction.dotProduct(vertices.get(1).subtract(ray.head).crossProduct(vertices.get(2).subtract(ray.head))));
+        double a3 = alignZero(ray.direction.dotProduct(vertices.get(2).subtract(ray.head).crossProduct(vertices.getFirst().subtract(ray.head))));
 
-        Vector n1 = v1.crossProduct(v2).normalize();
-        Vector n2 = v2.crossProduct(v3).normalize();
-        Vector n3 = v3.crossProduct(v1).normalize();
+        if(isZero(a1) || isZero(a2) || isZero(a3)){
+            return null;
+        }
 
-        double a= alignZero(ray.direction.dotProduct(n1));
-        double b= alignZero(ray.direction.dotProduct(n2));
-        double c= alignZero(ray.direction.dotProduct(n3));
-        if(a<0&&b<0&&c<0 || a>0&&b>0&&c>0)
-            return pointList;
+        if((a1 > 0 && a2 > 0 && a3 > 0) || (a1 < 0 && a2 < 0 && a3 < 0)){
+            return List.of(new GeoPoint(this, planeIntersections.getFirst()));
+        }
 
         return null;
     }

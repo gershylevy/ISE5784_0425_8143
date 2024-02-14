@@ -6,6 +6,8 @@ import geometries.*;
 import java.awt.image.BufferedImage;
 import java.util.MissingResourceException;
 
+import static primitives.Util.isZero;
+
 /**
  * Camera class to represent a Camera in a Scene
  */
@@ -113,9 +115,7 @@ public class Camera implements Cloneable {
     /**
      * Default constructor for Camera (private because we are using Builder Design Pattern)
      */
-    private Camera() {
-
-    }
+    private Camera() {}
 
     /**
      * Getter for Constructor (because we are using Builder Design Pattern)
@@ -133,16 +133,16 @@ public class Camera implements Cloneable {
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
 
-        double ry=this.viewPlaneHeight/nY;
-        double rx=this.viewPlaneWidth/nX;
+        double ry=  (double)  this.viewPlaneHeight/nY;
+        double rx=(double) this.viewPlaneWidth/nX;
 
         double xj=(j-(nX-1)/2.0)*rx;
         double yi=-(i-(nY-1)/2.0)*ry;
         Point pij=viewPlaneCenter;
 
-        if(xj!=0)
+        if(!isZero(xj))
             pij=pij.add(vRight.scale(xj));
-        if(yi!=0)
+        if(!isZero(yi))
             pij=pij.add(vUp.scale(yi));
 
         return new Ray(p0,pij.subtract(p0));
@@ -194,10 +194,9 @@ public class Camera implements Cloneable {
      * @param indexT Index on the y-axis
      */
 
-    private void castRay(int Nx,int Ny,int indexI,int indexT)
-    {
+    private void castRay(int Nx,int Ny,int indexI,int indexT) {
         Ray ray=this.constructRay(Nx,Ny,indexI,indexT);
-        this.imageWriter.writePixel(indexI,indexT,this.rayTracer.traceRay(ray));
+        this.imageWriter.writePixel(indexI,indexT,rayTracer.traceRay(ray));
     }
 
 
@@ -216,7 +215,7 @@ public class Camera implements Cloneable {
         }
 
         /**
-         * Funciton to set location of Camera
+         * Function to set location of Camera
          * @param location new location
          */
 
@@ -311,7 +310,7 @@ public class Camera implements Cloneable {
                 if(camera.rayTracer==null)
                     throw new MissingResourceException(error, cam, "Missing RayTracer in Camera");
 
-                if (!Util.isZero(camera.vRight.dotProduct(camera.vTo)))
+                if (!isZero(camera.vRight.dotProduct(camera.vTo)))
                     throw new IllegalArgumentException("To and up Vectors not orthogonal");
                 camera.vRight = camera.vTo.crossProduct(camera.vUp).normalize();
 

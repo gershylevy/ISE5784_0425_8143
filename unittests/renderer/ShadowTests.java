@@ -2,6 +2,8 @@ package renderer;
 
 import static java.awt.Color.*;
 
+import lighting.DirectionalLight;
+import lighting.PointLight;
 import org.junit.jupiter.api.Test;
 
 import geometries.*;
@@ -57,7 +59,7 @@ public class ShadowTests {
    @Test
    public void sphereTriangleMove1() throws CloneNotSupportedException {
       sphereTriangleHelper("shadowSphereTriangleMove2", //
-                           new Triangle(new Point(-69,-39,1), new Point(-39,-69,1), new Point(-67,-67,-3)), //
+                           new Triangle(new Point(-70,-30,0), new Point(-40,-60,0), new Point(-67,-67,-3)), //
                            new Point(-100, -100, 200));
    }
 
@@ -65,7 +67,7 @@ public class ShadowTests {
    @Test
    public void sphereTriangleMove2() throws CloneNotSupportedException {
       sphereTriangleHelper("shadowSphereTriangleMove1", //
-                           new Triangle(new Point(-71,-41,-1), new Point(-41,-71,-1), new Point(-69,-69,-5)), //
+                           new Triangle(new Point(-70,-40,-20), new Point(-41,-71,-20), new Point(-69,-69,-5)), //
                            new Point(-100, -100, 200));
    }
 
@@ -108,6 +110,52 @@ public class ShadowTests {
          .build()
          .renderImage();
          camera.build().writeToImage();
+   }
+
+
+   @Test
+   public void Elements10Test() throws CloneNotSupportedException {
+      scene.geometries.add(
+              new Sphere(new Point(0,0,0),100).setEmission(new Color(RED))
+                      .setMaterial(new Material().setkS(0.8).setShininess(100)),
+              new Sphere(new Point(-40,45,90),10).setEmission(new Color(BLACK))
+                      .setMaterial(new Material().setkS(0.8).setShininess(60)),
+              new Sphere(new Point(40,45,90),10).setEmission(new Color(BLACK))
+                      .setMaterial(new Material().setkS(0.8).setShininess(60)),
+              new Plane(new Point(0,0,-150),new Point(100,150,0),new Point(-100,50,-150))
+                      .setMaterial(new Material().setkS(0.8).setShininess(60)).
+                      setEmission(new Color(BLUE)),
+              new Sphere(new Point(-20,-20,120),20).setEmission(new Color(YELLOW))
+                      .setMaterial(new Material().setkS(0.8).setShininess(60)),
+              new Sphere(new Point(20,-20,120),20).setEmission(new Color(YELLOW))
+                      .setMaterial(new Material().setkS(0.8).setShininess(60)),
+              new Triangle(new Point(50,-50,130),new Point(-50,-50,130),new Point(0,-100,0))
+                      .setEmission(new Color(BLACK)).setMaterial(new Material().setkS(0.8).setShininess(60)),
+              new Triangle(new Point(30,-80,150),new Point(-30,-80,150),new Point(0,-100,10))
+                      .setEmission(new Color(GRAY)).setMaterial(new Material().setkS(0.8).setShininess(60))
+      );
+
+      scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
+      scene.lights.add(
+              new SpotLight(new Color(700, 400, 400), new Point(40, 40, 115), new Vector(-1, -1, -4)) //
+                      .setkL(4E-4).setkQ(2E-5));
+      scene.lights.add(new DirectionalLight(new Color(700, 400, 400),new Vector(-1,-1,-1)));
+      scene.lights.add(new PointLight(new Color(700, 400, 400), new Point(100,100,300))
+              .setkL(0.001).setkQ(0.0002));
+      scene.lights.add(
+              new SpotLight(new Color(700, 400, 400), new Point(100, 100, 100), new Vector(-102, -50, -15)) //
+                      .setkL(4E-4).setkQ(2E-5));
+      scene.lights.add(
+              new SpotLight(new Color(700, 400, 400), new Point(120, 120, 120), new Vector(-100, -140, -20)) //
+                      .setkL(4E-4).setkQ(2E-5));
+      scene.lights.add(
+              new SpotLight(new Color(700, 400, 400), new Point(-120, 120, 120), new Vector(100, -140, -20)) //
+                      .setkL(4E-4).setkQ(2E-5));
+
+      camera.setImageWriter(new ImageWriter("10ElementsTest", 600, 600))
+              .build()
+              .renderImage();
+      camera.build().writeToImage();
    }
 
 }

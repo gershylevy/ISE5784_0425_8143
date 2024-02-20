@@ -115,10 +115,10 @@ public class Plane extends Geometry {
             return null;
         }
 
-        if(ray.getPoint(t).distance(ray.head)>max)
-            return null;
+        if(ray.getPoint(t).distance(ray.head)<max)
+            return List.of(new GeoPoint(this, ray.getPoint(t)));
 
-        return List.of(new GeoPoint(this, ray.getPoint(t)));
+        return null;
     }
 
 }

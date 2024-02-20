@@ -9,6 +9,7 @@ import static primitives.Util.*;
  * @author netanel grossman
  */
 public class Ray {
+    private static final double DELTA = 0.1;
     /**
      * beginning of the line
      */
@@ -41,6 +42,18 @@ public class Ray {
                && this.head.equals(other.head)
                && this.direction.equals(other.direction);
    }
+    /**
+     * constructor  with delta
+     */
+    public Ray(Point head, Vector n, Vector dir) {
+        this.direction = dir.normalize();
+        double nv = n.dotProduct(this.direction);
+        Vector delta  =n.scale(DELTA);
+        if (nv < 0)
+            delta = delta.scale(-1);
+        this.head = head.add(delta);
+    }
+
 
     /**
      * function creating a string out of our ray

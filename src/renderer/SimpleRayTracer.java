@@ -1,11 +1,13 @@
 package renderer;
 
 import geometries.Intersectable;
+import geometries.Plane;
+import geometries.Triangle;
 import primitives.*;
 import scene.*;
 import java.util.List;
 import lighting.*;
-
+import geometries.Intersectable.GeoPoint;
 import static primitives.Util.*;
 
 /**
@@ -13,6 +15,22 @@ import static primitives.Util.*;
  */
 
 public class SimpleRayTracer extends RayTracerBase {
+
+    /**
+     * Double for moving the head of the Ray for shading
+     */
+
+    private static final double DELTA = 0.1;
+
+    /**
+     * Int to stop in recursion
+     */
+    private static final int MAX_CALC_COLOR_LEVEL = 10;
+
+    /**
+     * Int to stop in recursion
+     */
+    private static final double MIN_CALC_COLOR_K = 0.001;
 
     /**
      * C-tor for simple Ray tracer
@@ -62,7 +80,7 @@ public class SimpleRayTracer extends RayTracerBase {
             Vector l = lightSource.getL(gp.point);
             //lI*n
             double nl= alignZero(n.dotProduct(l));
-            if (nl* nv> 0) {
+            if ((nl* nv> 0)&& unshaded(gp,lightSource, l, n,nl)) {
                 Color iL= lightSource.getIntensity(gp.point);
                 color = color.add(iL.scale(calcDiffusive(material, nl)
                         .add(calcSpecular(material, n, l, nl, v))));
@@ -97,4 +115,59 @@ public class SimpleRayTracer extends RayTracerBase {
                 Math.pow(
                         Math.max(0, v.scale(-1).dotProduct(l.subtract(n.scale(nl*2)))),material.shininess));
     }
+
+    /**
+     * Function to check if a Geometry has shade
+     * @param gp Shape that we are making the shadow with
+     * @param l Vector from Light source to Point
+     * @param n Vector normal
+     * @return If the shape is unshaded
+     */
+
+ /*   private boolean unshaded(Intersectable.GeoPoint gp , Vector l, Vector n) {
+        Vector lightDirection = l.scale(-1); // from point to light source
+        Vector DeltaVector = n.scale(DELTA);
+        Point point = gp.point.add(DeltaVector);
+        Ray ray = new Ray(point, lightDirection);
+        List<Intersectable.GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
+        // Flat geometry can't self-intersect
+        if (gp.geometry instanceof Triangle || gp.geometry instanceof Plane)
+            if(intersections!=null)
+                intersections.remove(gp);
+
+        if(intersections==null)
+            return true;
+
+        return intersections.isEmpty();
+
+    }
+*/
+
+    /**
+     * Function to see if a Shape is shaded
+     * @param gp GeoPoint to check if there is shade on
+     * @param light Light that shade will come from
+     * @param l Vector from Light to Shape
+     * @param n Normal of the Shape
+     * @param nl Dot product of n and l
+     * @return If the Shape is unshaded
+     */
+
+
+    private boolean unshaded(GeoPoint gp, LightSource light,
+                             Vector l, Vector n, double nl) {
+        Vector lightDirection = l.scale(-1); // from point to light source
+        Vector deltaVector = n.scale(nl < 0 ? DELTA : -DELTA);
+        Point point = gp.point.add(deltaVector);
+        Ray ray = new Ray(point, lightDirection);
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray,light.getDistance(gp.point));
+        if (intersections == null) return true;
+
+        for(int i=0;i<intersections.size();i++)
+            if(intersections.get(i).point.distance(gp.point)<light.getDistance(gp.point))
+                return false;
+        return true;
+
+    }
+
 }

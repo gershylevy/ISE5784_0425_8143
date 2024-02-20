@@ -22,15 +22,7 @@ public abstract class Intersectable {
     }
 
 
-    /**
-     * "Public" function to find a shapes intersections with a Ray (NVI- Non-Virtual Interface)
-     * @param ray Ray that we find intersections with
-     * @return Intersection GeoPoints
-     */
 
-    public List<GeoPoint> findGeoIntersections(Ray ray){
-        return findGeoIntersectionsHelper(ray);
-    }
 
     /**
      * "Hidden" function to find a shapes intersections with a Ray (NVI- Non-Virtual Interface)
@@ -38,7 +30,32 @@ public abstract class Intersectable {
      * @return Intersection GeoPoints
      */
 
-    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
+    //protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
+
+    /**
+     * "Public" function to find a shapes intersections with a Ray (NVI- Non-Virtual Interface)
+     * @param ray Ray that we find intersections with
+     * @return Intersection GeoPoints
+     */
+
+    public final List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
+    }
+
+    /**
+     * "Public" function to find a shapes intersections with a Ray (NVI- Non-Virtual Interface)
+     * @param ray Ray that we find intersections with
+     * @param maxDistance Max distance of the Intersection
+     * @return Intersection GeoPoints
+     */
+    public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        return findGeoIntersectionsHelper(ray, maxDistance);
+    }
+
+    /**
+     * Helper function for findGeoIntersections
+     */
+    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance);
 
 
     /**
@@ -92,6 +109,8 @@ public abstract class Intersectable {
         public String toString() {
             return geometry.toString()+point.toString();
         }
+
+
 
 
     }

@@ -38,7 +38,7 @@ public class Geometries extends Intersectable {
     }
 
 
-    @Override
+ /*   @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         List<GeoPoint> result = null;
         for (Intersectable item : Shapes) {
@@ -48,6 +48,27 @@ public class Geometries extends Intersectable {
                     result = new LinkedList<>();  // Initialize the list
                 }
                 result.addAll(allIntersections);
+            }
+
+        }
+        return result;
+    }
+
+ */
+
+
+    @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double max) {
+        List<GeoPoint> result = null;
+        for (Intersectable item : Shapes) {
+            List<GeoPoint> allIntersections = item.findGeoIntersections(ray,max);
+            if (allIntersections != null) {
+                if (result == null) {
+                    result = new LinkedList<>();  // Initialize the list
+                }
+                for(int i=0;i<allIntersections.size();i++)
+                    if(allIntersections.get(i).point.distance(ray.head)<=max)
+                        result.add(allIntersections.get(i));
             }
 
         }

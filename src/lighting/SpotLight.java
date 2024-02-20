@@ -65,4 +65,5 @@ public class SpotLight extends PointLight {
         factor=Math.pow(factor,NarrowBeam);
         return super.getIntensity(point).scale(factor);
     }
+
 }

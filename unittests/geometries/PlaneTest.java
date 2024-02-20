@@ -161,4 +161,21 @@ class PlaneTest {
                 "Amount of intersections incorrect for Ray begins on q of the Plane");
 
     }
+
+
+
+    @Test
+    void GeoPointPlaneMaxTest() {
+
+        // ============ Equivalence Partitions Tests ==============
+
+        //TC01: Max is less than the distance
+
+        Plane p1=new Plane(new Point(0,0,0),new Point(0,1,0),new Point(0,2,1));
+        assertNull(p1.findGeoIntersectionsHelper(new Ray(new Point(6,0,0),new Vector(-1,0,0)),1)
+                ,"Max < Distance for Plane doesn't work");
+
+
+        //Most tests are covered in past tests when d=infinity
+    }
 }

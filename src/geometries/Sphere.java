@@ -5,6 +5,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 import static primitives.Util.*;
+
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
 import static java.lang.Math.sqrt;
@@ -36,7 +38,7 @@ public class Sphere extends RadialGeometry{
         return vectorToSurface.normalize();
     }
 
-    @Override
+ /*   @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
         Point rayHead = ray.head;
         Vector v = ray.direction;
@@ -65,6 +67,61 @@ public class Sphere extends RadialGeometry{
         else if(alignZero(tm - th)>0 && alignZero(tm + th) > 0){
             return List.of(new GeoPoint(this,ray.getPoint(alignZero(tm + th))), new GeoPoint(this, ray.getPoint(alignZero(tm - th))));
         }
+        return null;
+    }
+
+  */
+
+    @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double max){
+        Point rayHead = ray.head;
+        Vector v = ray.direction;
+        if(rayHead.equals(center)) {
+            if(ray.getPoint(radius).distance(ray.head)>max)
+                return null;
+            return List.of(new GeoPoint(this, ray.getPoint(radius)));
+        }
+        Vector u = center.subtract(rayHead);
+        double tm = alignZero(v.dotProduct(u));
+        if(Math.sqrt(alignZero(u.lengthSquared()-tm*tm))>=radius){
+            return null;
+        }
+
+        double th = Math.sqrt(alignZero(radius*radius-alignZero(u.lengthSquared()-tm*tm)));
+
+
+
+        if(alignZero(tm + th) <= 0 && alignZero(tm - th) <= 0){
+            return null;
+        }
+
+        else if (alignZero(tm + th) > 0 && alignZero(tm - th) <= 0){
+            if(ray.getPoint(alignZero(tm+th)).distance(ray.head)>max)
+                return null;
+            return List.of(new GeoPoint(this,ray.getPoint(alignZero(tm + th))));
+        }
+
+        else if(alignZero(tm - th) > 0 && alignZero(tm + th) <= 0){
+            if(ray.getPoint(alignZero(tm-th)).distance(ray.head)>max)
+                return null;
+            return List.of(new GeoPoint(this,ray.getPoint(alignZero(tm - th))));
+        }
+
+        else if(alignZero(tm - th)>0 && alignZero(tm + th) > 0){
+            List<GeoPoint> temp=new LinkedList<>();
+            boolean a=ray.getPoint(alignZero(tm-th)).distance(ray.head)<=max;
+            boolean b=ray.getPoint(alignZero(tm+th)).distance(ray.head)<=max;
+
+
+            if(a||b) {
+                if (a)
+                    temp.add(new GeoPoint(this, ray.getPoint(alignZero(tm - th))));
+                if (b)
+                    temp.add(new GeoPoint(this, ray.getPoint(alignZero(tm + th))));
+                return temp;
+            }
+        }
+
         return null;
     }
 }

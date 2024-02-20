@@ -9,6 +9,20 @@ import geometries.*;
 public class Material {
 
     /**
+     * The ratio of the transparency
+     */
+
+    public Double3 kT=Double3.ZERO;
+
+
+    /**
+     * The ration of the reflection
+     */
+
+    public Double3 kR=Double3.ZERO;
+
+
+    /**
      * The ratio of reflection of the diffuse term of incoming light
      */
     public Double3 kD = new Double3(0);
@@ -77,6 +91,51 @@ public class Material {
 
     public Material setShininess(int shininess) {
         this.shininess=shininess;
+        return this;
+    }
+
+    /**
+     * Setter for kT (Double)
+     * @param d Our new kT
+     * @return Return this for chained setters
+     */
+
+    public Material setkT(Double d) {
+        this.kT = new Double3(d);
+        return this;
+    }
+
+    /**
+     * Setter for kT (Double3)
+     * @param d Our new kT
+     * @return Return this for chained setters
+     */
+
+    public Material setkT(Double3 d) {
+        this.kT = d;
+        return this;
+    }
+
+
+    /**
+     * Setter for kR (Double)
+     * @param d Our new kR
+     * @return Return this for chained setters
+     */
+
+    public Material setkR(Double d) {
+        this.kR = new Double3(d);
+        return this;
+    }
+
+    /**
+     * Setter for kR (Double3)
+     * @param d Our new kR
+     * @return Return this for chained setters
+     */
+
+    public Material setkR(Double3 d) {
+        this.kT = d;
         return this;
     }
 }

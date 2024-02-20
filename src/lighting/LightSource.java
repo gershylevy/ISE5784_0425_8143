@@ -20,4 +20,11 @@ public interface LightSource {
      * @return The L from the Point
      */
     public Vector getL(Point p);
+
+    /**
+     * Function to get distance of Light from Point
+     * @param p Point to get distance from Light
+     * @return Distance of Point and Light
+     */
+    public double getDistance(Point p);
 }

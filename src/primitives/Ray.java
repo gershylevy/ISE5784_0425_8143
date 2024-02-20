@@ -80,12 +80,13 @@ public class Ray {
      * @return The closest GeoPoint
      */
 
-    public Intersectable.GeoPoint findClosestGeoPoint(List<Intersectable.GeoPoint> pointList) {
+
+   public Intersectable.GeoPoint findClosestGeoPoint(List<Intersectable.GeoPoint> pointList) {
 
         if(pointList==null)
             return null;
 
-        Intersectable.GeoPoint closest=pointList.getFirst();
+        Intersectable.GeoPoint closest=pointList.get(0);
         double distance=pointList.getFirst().point.distance(this.head);
 
         for(int i=0;i<pointList.size();i++) {
@@ -96,4 +97,5 @@ public class Ray {
         }
         return closest;
     }
+
 }

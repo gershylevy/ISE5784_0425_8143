@@ -256,4 +256,47 @@ class SphereTest {
                 "Intersection Point not as expected for Ray's line is inside, Ray is orthogonal to Ray start to Sphere's center line");
 
     }
+
+    @Test
+    void GeoPointSphereMaxTest() {
+
+        // ============ Equivalence Partitions Tests ==============
+
+
+        //TC01: Max is less than distance
+
+        Sphere s1=new Sphere(new Point(0,0,0),2);
+        Ray r1=new Ray(new Point(6,0,0),new Vector(-1,0,0));
+
+        assertNull(s1.findGeoIntersectionsHelper(r1,1),
+                "Max < Distance for Sphere doesn't work");
+
+
+        //TC02: Max is more than distance to first intersection but less than distance to second intersection
+
+        assertEquals(1,s1.findGeoIntersectionsHelper(r1,7).size(),
+                "D1 <  Max < D2 for Sphere doesn't work");
+
+
+        //TC03: Ray begins in Sphere and doesn't reach end because of max
+
+        assertNull(s1.findGeoIntersectionsHelper(new Ray(new Point(-1,0,0),new Vector(1,0,0)),1),
+                "Ray begins in Sphere and doesn't reach end");
+
+
+
+        // =============== Boundary Values Tests ==================
+
+
+        //TC10: Ray begins on center Point and doesn't reach end because of max
+
+        assertNull(s1.findGeoIntersectionsHelper(new Ray(new Point(0,0,0),new Vector(1,0,0)),1),
+                "Ray begins in center of Sphere and doesn't reach end");
+
+        //Most tests are covered in past tests when d=infinity
+
+
+
+
+    }
 }

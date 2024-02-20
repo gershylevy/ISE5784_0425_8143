@@ -65,7 +65,7 @@ public class Plane extends Geometry {
         return normal;
     }
 
-    @Override
+/*    @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
 
 
@@ -87,6 +87,36 @@ public class Plane extends Geometry {
         if (t<0){
             return null;
         }
+
+        return List.of(new GeoPoint(this, ray.getPoint(t)));
+    }
+*/
+
+    @Override
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double max){
+
+
+        if(isZero(alignZero(normal.dotProduct(ray.direction)))){
+            return null;
+        }
+
+        if(ray.head.equals(q)){
+            return null;
+        }
+
+
+        if(isZero(alignZero(normal.dotProduct(q.subtract(ray.head))))) {
+            return null;
+        }
+
+        double t = alignZero((alignZero(normal.dotProduct(q.subtract(ray.head)))/alignZero(normal.dotProduct(ray.direction))));
+
+        if (t<0){
+            return null;
+        }
+
+        if(ray.getPoint(t).distance(ray.head)>max)
+            return null;
 
         return List.of(new GeoPoint(this, ray.getPoint(t)));
     }

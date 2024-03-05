@@ -114,6 +114,4 @@ public class BlackBoard{
 
         c1.getImageWriter().writePixel(pixelXIndex,pixelYIndex,new Color(Rsum,Gsum,Bsum));
     }
-
-
 }

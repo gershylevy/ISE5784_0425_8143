@@ -15,6 +15,8 @@ import static primitives.Util.isZero;
 public class Camera implements Cloneable {
 
 
+    private Boolean isGrid=false;
+
     /**
      * Point that the Camera is at
      */
@@ -61,6 +63,12 @@ public class Camera implements Cloneable {
      */
 
     private ImageWriter imageWriter;
+
+    /**
+     * Black board field
+     */
+    public BlackBoard blackBoard=new BlackBoard();
+
 
     public ImageWriter getImageWriter() {
         return imageWriter;
@@ -123,16 +131,7 @@ public class Camera implements Cloneable {
 
     public static Builder getBuilder() {return new Builder();}
 
-    /**
-     * Function to construct Ray from Camera
-     * @param nX Resolution on the x-axis
-     * @param nY Resolution on the y-axis
-     * @param j Index of the x-axis
-     * @param i Index of the y-axis
-     * @return Ray that we constructed
-     */
-    public Ray constructRay(int nX, int nY, int j, int i) {
-
+    private Point constructRayHelper(int nX, int nY, int j, int i){
         double ry=  (double)  this.viewPlaneHeight/nY;
         double rx=(double) this.viewPlaneWidth/nX;
 
@@ -144,7 +143,20 @@ public class Camera implements Cloneable {
             pij=pij.add(vRight.scale(xj));
         if(!isZero(yi))
             pij=pij.add(vUp.scale(yi));
+        return pij;
+    }
 
+    /**
+     * Function to construct Ray from Camera
+     * @param nX Resolution on the x-axis
+     * @param nY Resolution on the y-axis
+     * @param j Index of the x-axis
+     * @param i Index of the y-axis
+     * @return Ray that we constructed
+     */
+    public Ray constructRay(int nX, int nY, int j, int i) {
+
+        Point pij=constructRayHelper(nX, nY, j, i);
         return new Ray(p0,pij.subtract(p0));
 
     }
@@ -157,8 +169,9 @@ public class Camera implements Cloneable {
 
     public void printGrid(int interval,Color color){
         for(int i=0;i<this.viewPlaneWidth;i+=interval)
-            for(int j=0;j<this.viewPlaneHeight;j+=1)
-                this.imageWriter.writePixel(i,j,color);
+            for(int j=0;j<this.viewPlaneHeight;j+=1) {
+                this.imageWriter.writePixel(i, j, color);
+            }
 
 
         for(int i=0;i<this.viewPlaneHeight;i+=interval)
@@ -170,7 +183,7 @@ public class Camera implements Cloneable {
      * Function to Render the Image
      */
 
-    public void renderImage() {
+    public void renderImage() throws CloneNotSupportedException {
         int nX = this.imageWriter.getNx();
         int nY = this.imageWriter.getNy();
         for (int i=0;i<nX;i++)
@@ -194,9 +207,18 @@ public class Camera implements Cloneable {
      * @param indexT Index on the y-axis
      */
 
-    private void castRay(int Nx,int Ny,int indexI,int indexT) {
-        Ray ray=this.constructRay(Nx,Ny,indexI,indexT);
-        this.imageWriter.writePixel(indexI,indexT,rayTracer.traceRay(ray));
+    private void castRay(int Nx,int Ny,int indexI,int indexT) throws CloneNotSupportedException {
+        if(!isGrid) {
+            Ray ray = this.constructRay(Nx, Ny, indexI, indexT);
+            this.imageWriter.writePixel(indexI, indexT, rayTracer.traceRay(ray));
+        }
+        else{
+            this.blackBoard.setX(indexI);
+            this.blackBoard.setY(indexT);
+            this.blackBoard.setSize(33);
+            this.blackBoard.setCamera(this);
+            this.blackBoard.createGrid(constructRayHelper(Nx,Ny,indexI,indexT),(double)  this.viewPlaneWidth/Nx,(double)  this.viewPlaneHeight/Nx);
+        }
     }
 
 
@@ -245,6 +267,11 @@ public class Camera implements Cloneable {
         public Builder setVpSize(int width, int height) {
             camera.viewPlaneWidth = width;
             camera.viewPlaneHeight = height;
+            return this;
+        }
+
+        public Builder setIsGrid(Boolean temp){
+            camera.isGrid=temp;
             return this;
         }
 

@@ -117,7 +117,7 @@ public class ShadowTests {
    public void Elements10Test() throws CloneNotSupportedException {
       scene.geometries.add(
               new Sphere(new Point(0,0,0),100).setEmission(new Color(RED))
-                      .setMaterial(new Material().setkS(0.8).setShininess(100).setkR(0.6)),
+                      .setMaterial(new Material().setkS(0.8).setShininess(100)),//.setkR(0.6)),
               new Sphere(new Point(-40,45,90),10).setEmission(new Color(BLACK))
                       .setMaterial(new Material().setkS(0.8).setShininess(60)),
               new Sphere(new Point(40,45,90),10).setEmission(new Color(BLACK))
@@ -152,10 +152,18 @@ public class ShadowTests {
               new SpotLight(new Color(700, 400, 400), new Point(-120, 120, 120), new Vector(100, -140, -20)) //
                       .setkL(4E-4).setkQ(2E-5));
 
-      camera.setImageWriter(new ImageWriter("10ElementsTest", 600, 600))
+
+      final Camera.Builder camera10     = Camera.getBuilder()
+              .setDirection(new Vector(0,0,-1), new Vector(0,1,0))
+              .setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
+              .setVpSize(200, 200)
+              .setRayTracer(new SimpleRayTracer(scene))
+              .setIsGrid(true);
+
+      camera10.setImageWriter(new ImageWriter("10ElementsTest", 600, 600))
               .build()
               .renderImage();
-      camera.build().writeToImage();
+      camera10.build().writeToImage();
    }
 
 }

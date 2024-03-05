@@ -59,7 +59,7 @@ public class Camera implements Cloneable {
     private Point viewPlaneCenter;
 
     /**
-     * ImageWriter field
+     * ImageWriter fiel
      */
 
     private ImageWriter imageWriter;

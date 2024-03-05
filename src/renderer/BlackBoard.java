@@ -2,7 +2,6 @@ package renderer;
 import primitives.*;
 import geometries.*;
 
-import static primitives.Util.isZero;
 
 public class BlackBoard{
 

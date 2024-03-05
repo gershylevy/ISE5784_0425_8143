@@ -5,27 +5,60 @@ import geometries.*;
 
 public class BlackBoard{
 
+    /**
+     * Width of the grid
+     */
     public double gridWidth;
+
+    /**
+     * Height of the grid
+     */
     public double gridHeight;
+
+    /**
+     * X index of the pixel
+     */
     public int pixelXIndex;
+
+    /**
+     * Y index of the pixel
+     */
     public int pixelYIndex;
+    /**
+     * Camera for the blackboard
+     */
     Camera c1;
+
+    /**
+     * Setter for camera
+     */
 
     public BlackBoard setCamera(Camera camera){
         c1=camera;
         return this;
     }
 
+    /**
+     * Setter for X index of the pixel
+     */
+
 
     public BlackBoard setX(int x){
         this.pixelXIndex=x;
         return this;
     }
+    /**
+     * Setter for Y index of the pixel
+     */
 
     public BlackBoard setY(int Y){
         this.pixelYIndex=Y;
         return this;
     }
+
+    /**
+     * Setter for height and width of the grid
+     */
 
     public BlackBoard setSize(double size){
         this.gridHeight=size;
@@ -33,15 +66,30 @@ public class BlackBoard{
         return this;
     }
 
+    /**
+     * Setter for height of the grid
+     */
+
     public BlackBoard setGridHeight(double gridHeight) {
         this.gridHeight = gridHeight;
         return this;
     }
 
+    /**
+     * Setter for width of the grid
+     */
+
     public BlackBoard setGridWidth(double gridWidth) {
         this.gridWidth = gridWidth;
         return this;
     }
+
+    /**
+     * Function to create grid
+     * @param center Center of the pixel
+     * @param pixelWidth Width of the pixel
+     * @param pixelHeight Height of the pixel
+     */
 
     public void createGrid(Point center,double pixelWidth,double pixelHeight) throws CloneNotSupportedException {
         double rectWidthSize=(double) pixelWidth/gridWidth;

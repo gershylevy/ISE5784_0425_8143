@@ -59,7 +59,7 @@ public class Camera implements Cloneable {
     private Point viewPlaneCenter;
 
     /**
-     * ImageWriter fiel
+     * ImageWriter field
      */
 
     private ImageWriter imageWriter;
@@ -67,7 +67,6 @@ public class Camera implements Cloneable {
     /**
      * Black board field
      */
-    public BlackBoard blackBoard=new BlackBoard();
 
 
     public ImageWriter getImageWriter() {
@@ -212,12 +211,13 @@ public class Camera implements Cloneable {
             Ray ray = this.constructRay(Nx, Ny, indexI, indexT);
             this.imageWriter.writePixel(indexI, indexT, rayTracer.traceRay(ray));
         }
-        else{
-            this.blackBoard.setX(indexI);
-            this.blackBoard.setY(indexT);
-            this.blackBoard.setSize(33);
-            this.blackBoard.setCamera(this);
-            this.blackBoard.createGrid(constructRayHelper(Nx,Ny,indexI,indexT),(double)  this.viewPlaneWidth/Nx,(double)  this.viewPlaneHeight/Nx);
+        else {
+            BlackBoard blackBoard=new BlackBoard();
+            blackBoard.setX(indexI);
+            blackBoard.setY(indexT);
+            blackBoard.setSize(1);
+            blackBoard.setCamera(this);
+            blackBoard.createGrid(constructRayHelper(Nx,Ny,indexI,indexT),(double)  this.viewPlaneWidth/Nx,(double)  this.viewPlaneHeight/Nx);
         }
     }
 

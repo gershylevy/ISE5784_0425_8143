@@ -42,16 +42,21 @@ public class Ray {
                && this.head.equals(other.head)
                && this.direction.equals(other.direction);
    }
+
     /**
      * constructor  with delta
      */
     public Ray(Point head, Vector n, Vector dir) {
         this.direction = dir.normalize();
-        double nv = n.dotProduct(this.direction);
+        double nv = alignZero(n.dotProduct(this.direction));
         Vector delta  =n.scale(DELTA);
-        if (nv < 0)
+        if (nv<0)
             delta = delta.scale(-1);
-        this.head = head.add(delta);
+        if(isZero(nv)){
+            this.head = head;
+        }
+        else
+            this.head = head.add(delta);
     }
 
 

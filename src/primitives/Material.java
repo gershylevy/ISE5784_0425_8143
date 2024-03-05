@@ -16,7 +16,7 @@ public class Material {
 
 
     /**
-     * The ration of the reflection
+     * The ratio of the reflection
      */
 
     public Double3 kR=Double3.ZERO;

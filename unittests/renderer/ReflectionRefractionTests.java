@@ -47,34 +47,34 @@ public class ReflectionRefractionTests {
          cameraBuilder.build().writeToImage();
    }
 
-   /** Produce a picture of a sphere lighted by a spot light */
-   @Test
-   public void twoSpheresOnMirrors() throws CloneNotSupportedException {
-      scene.geometries.add(
-                           new Sphere(new Point(-950, -900, -1000), 400d).setEmission(new Color(0, 50, 100))
-                              .setMaterial(new Material().setkD(0.25).setkS(0.25).setShininess(20)
-                                 .setkT(new Double3(0.5, 0, 0))),
-                           new Sphere(new Point(-950, -900, -1000), 200d).setEmission(new Color(100, 50, 20))
-                              .setMaterial(new Material().setkD(0.25).setkS(0.25).setShininess(20)),
-                           new Triangle(new Point(1500, -1500, -1500), new Point(-1500, 1500, -1500),
-                                        new Point(670, 670, 3000))
-                              .setEmission(new Color(20, 20, 20))
-                              .setMaterial(new Material().setkR(1.0)),
-                           new Triangle(new Point(1500, -1500, -1500), new Point(-1500, 1500, -1500),
-                                        new Point(-1500, -1500, -2000))
-                              .setEmission(new Color(20, 20, 20))
-                              .setMaterial(new Material().setkR(new Double3(0.5, 0, 0.4))));
-      scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0.1));
-      scene.lights.add(new SpotLight(new Color(1020, 400, 400), new Point(-750, -750, -150), new Vector(-1, -1, -4))
-         .setkL(0.00001).setkQ(0.000005));
+    /** Produce a picture of a sphere lighted by a spot light */
+    @Test
+    public void twoSpheresOnMirrors() throws CloneNotSupportedException {
+        scene.geometries.add(
+                new Sphere(new Point(-950, -900, -1000), 400d).setEmission(new Color(0, 50, 100))
+                        .setMaterial(new Material().setkD(0.25).setkS(0.25).setShininess(20)
+                                .setkT(new Double3(0.5, 0, 0))),
+                new Sphere(new Point(-950, -900, -1000), 200d).setEmission(new Color(100, 50, 20))
+                        .setMaterial(new Material().setkD(0.25).setkS(0.25).setShininess(20)),
+                new Triangle(new Point(1500, -1500, -1500), new Point(-1500, 1500, -1500),
+                        new Point(670, 670, 3000))
+                        .setEmission(new Color(20, 20, 20))
+                        .setMaterial(new Material().setkR(1.0)),
+                new Triangle(new Point(1500, -1500, -1500), new Point(-1500, 1500, -1500),
+                        new Point(-1500, -1500, -2000))
+                        .setEmission(new Color(20, 20, 20))
+                        .setMaterial(new Material().setkR(new Double3(0.5, 0, 0.4))));
+        scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), new Double3(0.1)));
+        scene.lights.add(new SpotLight(new Color(1020, 400, 400), new Point(-750, -750, -150), new Vector(-1, -1, -4))
+                .setkL(0.00001).setkQ(0.000005));
 
-      cameraBuilder.setLocation(new Point(0, 0, 10000)).setVpDistance(10000)
-         .setVpSize(2500, 2500)
-         .setImageWriter(new ImageWriter("reflectionTwoSpheresMirrored", 500, 500))
-         .build()
-         .renderImage();
-         cameraBuilder.build().writeToImage();
-   }
+        cameraBuilder.setLocation(new Point(0, 0, 10000)).setVpDistance(10000)
+                .setVpSize(2500, 2500)
+                .setImageWriter(new ImageWriter("reflectionTwoSpheresMirrored", 500, 500))
+                .build()
+                .renderImage();
+        cameraBuilder.build().writeToImage();
+    }
 
    /** Produce a picture of a two triangles lighted by a spot light with a
     * partially

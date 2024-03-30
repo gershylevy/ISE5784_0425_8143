@@ -109,6 +109,7 @@ public class LightsTests {
       scene1.geometries.add(sphere);
       scene1.lights.add(new PointLight(sphereLightColor, sphereLightPosition)
          .setkL(0.001).setkQ(0.0002));
+      camera1.setIsGrid(true);
 
       camera1.setImageWriter(new ImageWriter("lightSpherePoint", 500, 500))
          .build()

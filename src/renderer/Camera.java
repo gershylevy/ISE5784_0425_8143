@@ -5,6 +5,7 @@ import geometries.*;
 
 import java.awt.image.BufferedImage;
 import java.util.MissingResourceException;
+import java.util.List;
 
 import static primitives.Util.isZero;
 
@@ -14,6 +15,15 @@ import static primitives.Util.isZero;
 
 public class Camera implements Cloneable {
 
+    /**
+     * Blackboard of the Camera
+     */
+
+    private BlackBoard blackBoard=new BlackBoard();
+
+    /**
+     * Switch to activate MP1
+     */
 
     private Boolean isGrid=false;
 
@@ -65,7 +75,7 @@ public class Camera implements Cloneable {
     private ImageWriter imageWriter;
 
     /**
-     * Black board field
+     * Getter for image writer
      */
 
 
@@ -212,12 +222,18 @@ public class Camera implements Cloneable {
             this.imageWriter.writePixel(indexI, indexT, rayTracer.traceRay(ray));
         }
         else {
-            BlackBoard blackBoard=new BlackBoard();
-            blackBoard.setX(indexI);
-            blackBoard.setY(indexT);
-            blackBoard.setSize(1);
-            blackBoard.setCamera(this);
-            blackBoard.createGrid(constructRayHelper(Nx,Ny,indexI,indexT),(double)  this.viewPlaneWidth/Nx,(double)  this.viewPlaneHeight/Nx);
+            blackBoard.setPixelWidth((double) this.viewPlaneWidth/Nx).setPixelHeight((double) this.viewPlaneHeight/Ny)
+                    .setGridSize(9);
+            Point Pij=constructRayHelper(Nx,Ny,indexI,indexT);
+            List<Point> pointList=blackBoard.createGrid(Pij);
+            Color color1=new Color(0,0,0);
+            for (Point p: pointList) {
+                color1=color1.add(rayTracer.traceRay(new Ray(p0, p.subtract(p0))));
+            }
+
+            color1.reduce(blackBoard.gridSize*blackBoard.gridSize);
+
+            this.imageWriter.writePixel(indexI, indexT, color1);
         }
     }
 

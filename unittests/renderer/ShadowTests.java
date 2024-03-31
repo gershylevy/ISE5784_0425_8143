@@ -116,8 +116,8 @@ public class ShadowTests {
    @Test
    public void Elements10Test() throws CloneNotSupportedException {
       scene.geometries.add(
-              new Sphere(new Point(0,0,0),1).setEmission(new Color(RED))
-                      .setMaterial(new Material().setkS(0.8).setShininess(100))/*//.setkR(0.6)),
+              new Sphere(new Point(0,0,0),100).setEmission(new Color(RED))
+                      .setMaterial(new Material().setkS(0.8).setShininess(100)/*.setkR(0.6)*/),
               new Sphere(new Point(-40,45,90),10).setEmission(new Color(BLACK))
                       .setMaterial(new Material().setkS(0.8).setShininess(60)),
               new Sphere(new Point(40,45,90),10).setEmission(new Color(BLACK))
@@ -132,7 +132,7 @@ public class ShadowTests {
               new Triangle(new Point(50,-50,130),new Point(-50,-50,130),new Point(0,-100,0))
                       .setEmission(new Color(BLACK)).setMaterial(new Material().setkS(0.8).setShininess(60)),
               new Triangle(new Point(30,-80,150),new Point(-30,-80,150),new Point(0,-100,10))
-                      .setEmission(new Color(GRAY)).setMaterial(new Material().setkS(0.8).setShininess(60))*/
+                      .setEmission(new Color(GRAY)).setMaterial(new Material().setkS(0.8).setShininess(60))
       );
 
       scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));

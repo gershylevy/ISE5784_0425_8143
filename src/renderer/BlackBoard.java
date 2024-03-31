@@ -27,32 +27,65 @@ public class BlackBoard{
 
     public int gridSize=1;
 
+    /**
+     * Getter for pixelHeight
+     * @return The pixel height
+     */
+
     public double getPixelHeight() {
          return pixelHeight;
     }
+
+    /**
+     * Getter for pixelWidth
+     * @return The pixel width
+     */
 
     public double getPixelWidth() {
         return pixelWidth;
     }
 
+    /**
+     * Getter for gridSize
+     * @return The grid size
+     */
+
     public int getGridSize() {
         return gridSize;
     }
+
+    /**
+     * Setter for gridSize
+     */
 
     public BlackBoard setGridSize(int gridSize) {
         this.gridSize = gridSize;
         return this;
     }
 
+    /**
+     * Setter for pixelHeight
+     */
+
     public BlackBoard setPixelHeight(double pixelHeight) {
         this.pixelHeight = pixelHeight;
         return this;
     }
 
+    /**
+     * Setter for pixelWidth
+     */
+
     public BlackBoard setPixelWidth(double pixelWidth) {
         this.pixelWidth = pixelWidth;
         return this;
     }
+
+    /**
+     * Function to create a grid around a Point
+     * @param pixelCenter Center of the pixel that we create a grid around
+     * @return List of Points on the grid (using jitter)
+     */
 
     public List<Point> createGrid(Point pixelCenter) {
         List<Point> pointList=new LinkedList<>();

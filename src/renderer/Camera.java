@@ -209,7 +209,7 @@ public class Camera implements Cloneable {
     }
 
     /**
-     * Function to cast Ray through the center of a pixel
+     * Function to cast Ray through the center of a pixel or multiple Rays through a grid on the pixel
      * @param Nx Resolution on the x-axis
      * @param Ny Resolution on the y-axis
      * @param indexI Index on the x-axis
@@ -223,15 +223,19 @@ public class Camera implements Cloneable {
         }
         else {
             blackBoard.setPixelWidth((double) this.viewPlaneWidth/Nx).setPixelHeight((double) this.viewPlaneHeight/Ny)
-                    .setGridSize(9);
-            Point Pij=constructRayHelper(Nx,Ny,indexI,indexT);
-            List<Point> pointList=blackBoard.createGrid(Pij);
+                    .setGridSize(17);
+
+            Point center=constructRayHelper(Nx,Ny,indexI,indexT);
+            List<Point> pointList=blackBoard.createGrid(center);
             Color color1=new Color(0,0,0);
+
             for (Point p: pointList) {
-                color1=color1.add(rayTracer.traceRay(new Ray(p0, p.subtract(p0))));
+                Ray r=new Ray(p0, p.subtract(p0));
+                Color temp=rayTracer.traceRay(r);
+                color1=color1.add(temp);
             }
 
-            color1.reduce(blackBoard.gridSize*blackBoard.gridSize);
+            color1=color1.reduce((blackBoard.gridSize)*(blackBoard.gridSize));
 
             this.imageWriter.writePixel(indexI, indexT, color1);
         }

@@ -96,6 +96,7 @@ public class LightsTests {
    public void sphereDirectional() throws CloneNotSupportedException {
       scene1.geometries.add(sphere);
       scene1.lights.add(new DirectionalLight(sphereLightColor, sphereLightDirection));
+      camera1.setIsGrid(true);
 
       camera1.setImageWriter(new ImageWriter("lightSphereDirectional", 500, 500))
          .build()
@@ -123,6 +124,7 @@ public class LightsTests {
       scene1.geometries.add(sphere);
       scene1.lights.add(new SpotLight(sphereLightColor, sphereLightPosition, sphereLightDirection)
          .setkL(0.001).setkQ(0.0001));
+      camera1.setIsGrid(true);
 
       camera1.setImageWriter(new ImageWriter("lightSphereSpot", 500, 500))
          .build()

@@ -8,6 +8,18 @@ import java.util.List;
 
 public class BlackBoard{
 
+    /**
+     * Right facing Vector of the Camera
+     */
+
+    public Vector vRight;
+
+    /**
+     * Up facing Vector of the Camera
+     */
+
+    public Vector vUp;
+
 
     /**
      * Height of the pixel
@@ -82,6 +94,41 @@ public class BlackBoard{
     }
 
     /**
+     * Setter for vRight
+     */
+
+    public BlackBoard setvRight(Vector vRight) {
+        this.vRight = vRight;
+        return this;
+    }
+
+    /**
+     * Setter for vUp
+     */
+
+
+    public BlackBoard setvUp(Vector vUp) {
+        this.vUp = vUp;
+        return this;
+    }
+
+    /**
+     * Getter for vRight
+     */
+
+    public Vector getvRight() {
+        return vRight;
+    }
+
+    /**
+     * Getter for vUp
+     */
+
+    public Vector getvUp() {
+        return vUp;
+    }
+
+    /**
      * Function to create a grid around a Point
      * @param pixelCenter Center of the pixel that we create a grid around
      * @return List of Points on the grid (using jitter)
@@ -89,15 +136,25 @@ public class BlackBoard{
 
     public List<Point> createGrid(Point pixelCenter) {
         List<Point> pointList=new LinkedList<>();
-        Point topLeft=(pixelCenter.add(new Vector(-pixelWidth/2,pixelHeight/2,0)));
+        Point topLeft=(pixelCenter.add(vRight.scale(-0.5*pixelWidth).add(vUp.scale(0.5*pixelHeight))));
+        double x=(pixelWidth / gridSize) / 10;
 
 
-        for(int i=0;i<gridSize;i++) {
-            for (int j=0;j<gridSize;j++) {
+        for(int i=0;i<=gridSize;i++) {
+            for (int j=0;j<=gridSize;j++) {
                 if(i==0&&j==0)
                     pointList.add(topLeft);
-                else
-                    pointList.add(topLeft.add(new Vector(i*(pixelWidth/gridSize)/*+(Util.random(0, (pixelWidth / gridSize) / 10))*/, j*(-pixelHeight/gridSize), 0)));
+                else if (j==0) {
+                    pointList.add(topLeft.add(vRight.scale(i*(pixelWidth / gridSize)+(Util.random(-x, x)))));
+                }
+                else if(i==0){
+                    pointList.add(vUp.scale(j*(-pixelHeight / gridSize)));
+                }
+
+                if(i!=0&&j!=0){
+                    //pointList.add(topLeft.add(new Vector(i * (pixelWidth / gridSize)+(Util.random(-x, x)), j * (-pixelHeight / gridSize), 0)));
+                    pointList.add(topLeft.add(vRight.scale(i * (pixelWidth / gridSize)+(Util.random(-x, x))).add(vUp.scale(j * (-pixelHeight / gridSize)))));
+                }
             }
         }
 

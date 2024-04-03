@@ -223,7 +223,7 @@ public class Camera implements Cloneable {
         }
         else {
             blackBoard.setPixelWidth((double) this.viewPlaneWidth/Nx).setPixelHeight((double) this.viewPlaneHeight/Ny)
-                    .setGridSize(17);
+                    .setGridSize(17).setvUp(this.vUp).setvRight(this.vRight);
 
             Point center=constructRayHelper(Nx,Ny,indexI,indexT);
             List<Point> pointList=blackBoard.createGrid(center);
@@ -235,7 +235,7 @@ public class Camera implements Cloneable {
                 color1=color1.add(temp);
             }
 
-            color1=color1.reduce((blackBoard.gridSize)*(blackBoard.gridSize));
+            color1=color1.reduce((blackBoard.gridSize+1)*(blackBoard.gridSize+1));
 
             this.imageWriter.writePixel(indexI, indexT, color1);
         }

@@ -108,6 +108,7 @@ public class SimpleRayTracer extends RayTracerBase{
     private Color calcColor(GeoPoint gp, Ray ray) {
         return calcColor(gp, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K).add(scene.ambientLight.getIntensity());
     }
+
     /**
      * calculate color at given point using phong (kA*iA(iE + sum((kD*abs(lI*n)+kS*(max(0, -v*r))^nSh)*iLi)))
      * @param gp point to calculate at
@@ -157,7 +158,7 @@ public class SimpleRayTracer extends RayTracerBase{
      * @param ray ray to calculate for
      * @return closest point
      */
-    private GeoPoint findClosestIntersection(Ray ray) {
+    public GeoPoint findClosestIntersection(Ray ray) {
         List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
         if (intersections == null) {
             return null;
@@ -286,4 +287,6 @@ public class SimpleRayTracer extends RayTracerBase{
         if(closestPoint == null){return scene.background;}
         return calcColor(closestPoint, ray);
     }
+
+
 }

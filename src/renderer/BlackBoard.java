@@ -44,6 +44,7 @@ public class BlackBoard{
      * @return The pixel height
      */
 
+
     public double getPixelHeight() {
          return pixelHeight;
     }
@@ -56,6 +57,7 @@ public class BlackBoard{
     public double getPixelWidth() {
         return pixelWidth;
     }
+
 
     /**
      * Getter for gridSize
@@ -158,6 +160,51 @@ public class BlackBoard{
             }
         }
 
+        return pointList;
+    }
+
+
+    public List<Point> corners(Point pixelCenter){
+    /*    List<Point> pointList=new LinkedList<>();
+        Point topLeft=(pixelCenter.add(vRight.scale(-0.5*pixelWidth).add(vUp.scale(0.5*pixelHeight))));
+        double x=(pixelWidth / gridSize) / 10;
+        int numX=1;
+        int numY=1;
+
+        for(int i=0;i<=numX;i++)
+            for(int j=0;j<=numY;j++) {
+                if(i!=0&&j!=0) {
+                    Point p = topLeft.add((vRight.scale(i * (pixelWidth / numX))).add(vUp.scale(j * (-pixelHeight / numY))));
+                    Ray r=
+                }
+
+            }
+
+     */
+        List<Point> pointList=new LinkedList<>();
+        Point topLeft=(pixelCenter.add(vRight.scale(-0.5*pixelWidth).add(vUp.scale(0.5*pixelHeight))));
+        Point topRight=topLeft.add(vRight.scale(pixelWidth));
+        Point bottomRight=topRight.add(vUp.scale(-pixelHeight));
+        Point bottomLeft=bottomRight.add(vRight.scale(-pixelWidth));
+
+        pointList.add(topLeft);
+        pointList.add(topRight);
+        pointList.add(bottomRight);
+        pointList.add(bottomLeft);
+
+        return pointList;
+    }
+
+    public List<Point> centers(Point center){
+        List<Point> pointList=new LinkedList<>();
+        Point topLeftCenter=(center.add(vRight.scale(-0.25*pixelWidth).add(vUp.scale(0.25*pixelHeight))));
+        Point topRightCenter=topLeftCenter.add(vRight.scale(pixelWidth/2));
+        Point bottomRightCenter=topRightCenter.add(vUp.scale(-pixelHeight/2));
+        Point bottomLeftCenter=bottomRightCenter.add(vRight.scale(-pixelWidth/2));
+        pointList.add(topLeftCenter);
+        pointList.add(topRightCenter);
+        pointList.add(bottomLeftCenter);
+        pointList.add(bottomRightCenter);
         return pointList;
     }
 

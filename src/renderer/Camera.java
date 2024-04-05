@@ -28,6 +28,11 @@ public class Camera implements Cloneable {
     private Boolean isGrid=false;
 
     /**
+     * Switch to activate MP2
+     */
+    private Boolean isFancy=false;
+
+    /**
      * Point that the Camera is at
      */
     private Point p0;
@@ -217,11 +222,11 @@ public class Camera implements Cloneable {
      */
 
     private void castRay(int Nx,int Ny,int indexI,int indexT) throws CloneNotSupportedException {
-        if(!isGrid) {
+        if(!isGrid&&!isFancy) {
             Ray ray = this.constructRay(Nx, Ny, indexI, indexT);
             this.imageWriter.writePixel(indexI, indexT, rayTracer.traceRay(ray));
         }
-        else {
+        if(isGrid&&!isFancy){
             blackBoard.setPixelWidth((double) this.viewPlaneWidth/Nx).setPixelHeight((double) this.viewPlaneHeight/Ny)
                     .setGridSize(17).setvUp(this.vUp).setvRight(this.vRight);
 
@@ -239,6 +244,47 @@ public class Camera implements Cloneable {
 
             this.imageWriter.writePixel(indexI, indexT, color1);
         }
+
+        if(isFancy) {
+            Point center=constructRayHelper(Nx,Ny,indexI,indexT);
+            blackBoard.setPixelWidth((double) this.viewPlaneWidth/Nx).setPixelHeight((double) this.viewPlaneHeight/Ny)
+                    .setGridSize(17).setvUp(this.vUp).setvRight(this.vRight);
+            Color color1 = isFancyHelper(center,(int)(Math.log(blackBoard.gridSize)/Math.log(2)));
+            this.imageWriter.writePixel(indexI, indexT, color1);
+        }
+
+    }
+
+    /**
+     * Helper function for recursion
+     * @param center Center of the square we look at
+     * @param level Level of recursion
+     * @return The average Color at the pixel
+     */
+
+
+    private Color isFancyHelper(Point center, int level){
+
+        List<Point> pointList=blackBoard.corners(center);
+        Color c1=rayTracer.traceRay(new Ray(p0,pointList.get(0).subtract(p0)));
+        Color c2=rayTracer.traceRay(new Ray(p0,pointList.get(1).subtract(p0)));
+        Color c3=rayTracer.traceRay(new Ray(p0,pointList.get(2).subtract(p0)));
+        Color c4=rayTracer.traceRay(new Ray(p0,pointList.get(3).subtract(p0)));
+
+        if(c1==c2&&c1==c3&&c1==c4)
+            return c1;
+
+        if(level==0) {
+            c1=c1.add(c2).add(c3).add(c4);
+            return c1.reduce(4);
+        }
+
+        else{
+            pointList=blackBoard.centers(center);
+            c1= (isFancyHelper(pointList.get(0),level-1)).add(isFancyHelper(pointList.get(1),level+1)).add(isFancyHelper(pointList.get(2),level+1)).add(isFancyHelper(pointList.get(3),level+1));
+            return c1.reduce(4);
+        }
+
     }
 
 
@@ -290,10 +336,24 @@ public class Camera implements Cloneable {
             return this;
         }
 
+        /**
+         * Setter on option to use MP1
+         */
+
         public Builder setIsGrid(Boolean temp){
             camera.isGrid=temp;
             return this;
         }
+
+        /**
+         * Setter for option to use MP2
+         */
+
+        public Builder setIsFancy(Boolean temp){
+            camera.isFancy=temp;
+            return this;
+        }
+
 
         /**
          * Function to set view plane distance

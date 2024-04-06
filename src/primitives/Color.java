@@ -113,4 +113,15 @@ public class Color {
 
    @Override
    public String toString() { return "rgb:" + rgb; }
+
+
+   /**
+    * Check is 2 Colors are close to equals
+    * @param c1 Color to compare with ours
+    * @return If they are close to equals
+    */
+   public boolean isCloseEquals(Color c1){
+      return (this.rgb.subtract(c1.rgb).lowerThan(1));
+   }
+
 }

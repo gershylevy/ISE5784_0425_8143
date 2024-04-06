@@ -4,8 +4,11 @@ import primitives.*;
 import geometries.*;
 
 import java.awt.image.BufferedImage;
+import java.util.BitSet;
+import java.util.LinkedList;
 import java.util.MissingResourceException;
 import java.util.List;
+import java.util.stream.*;
 
 import static primitives.Util.isZero;
 
@@ -14,6 +17,19 @@ import static primitives.Util.isZero;
  */
 
 public class Camera implements Cloneable {
+
+
+    private static int threadsCount = 0; // -2 auto, -1 range/stream, 0 no threads, 1+ number of threads
+    private static final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
+    private static double printInterval = 0; // printing progress percentage interval
+
+    /** Pixel manager for supporting:
+     * <ul>
+     * <li>multi-threading</li>
+     * <li>debug print of progress percentage in Console window/tab</li>
+     * <ul>
+     */
+    private PixelManager pixelManager;
 
     /**
      * Blackboard of the Camera
@@ -200,10 +216,45 @@ public class Camera implements Cloneable {
     public void renderImage() throws CloneNotSupportedException {
         int nX = this.imageWriter.getNx();
         int nY = this.imageWriter.getNy();
-        for (int i=0;i<nX;i++)
-            for(int j=0;j<nY;j++)
-                this.castRay(nX,nY,i,j);
+        pixelManager = new PixelManager(nY, nX, printInterval);
+
+
+        if(threadsCount==0) {
+            for (int i = 0; i < nX; i++)
+                for (int j = 0; j < nY; j++)
+                    this.castRay(nX, nY, i, j);
+        }
+
+        else if (threadsCount==1)
+            IntStream.range(0,nY).parallel().forEach(i->IntStream.range(0,nX).parallel()
+                    .forEach(j-> {
+                        try {
+                            castRay(nX,nY,j,i);
+                        } catch (CloneNotSupportedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }));
+
+        else  {
+            var threads=new LinkedList<Thread>();
+            while (threadsCount-- >0)
+                threads.add(new Thread(()->{
+                    PixelManager.Pixel pixel;
+                    while ((pixel= pixelManager.nextPixel())!=null) {
+                        try {
+                            castRay(nX,nY,pixel.col(), pixel.row());
+                        } catch (CloneNotSupportedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }));
+            for(var thread:threads) thread.start();
+            try {for(var thread:threads) thread.join();} catch (InterruptedException ignore){}
+
+        }
     }
+
+
 
     /**
      * Function to Make Image
@@ -249,9 +300,10 @@ public class Camera implements Cloneable {
             Point center=constructRayHelper(Nx,Ny,indexI,indexT);
             blackBoard.setPixelWidth((double) this.viewPlaneWidth/Nx).setPixelHeight((double) this.viewPlaneHeight/Ny)
                     .setGridSize(17).setvUp(this.vUp).setvRight(this.vRight);
-            Color color1 = isFancyHelper(center,(int)(Math.log(blackBoard.gridSize)/Math.log(2)));
+            Color color1 = isFancyHelper(center,(int)(Math.log(blackBoard.gridSize)/Math.log(2)),(int)(Math.log(blackBoard.gridSize)/Math.log(2)));
             this.imageWriter.writePixel(indexI, indexT, color1);
         }
+        pixelManager.pixelDone();
 
     }
 
@@ -263,15 +315,15 @@ public class Camera implements Cloneable {
      */
 
 
-    private Color isFancyHelper(Point center, int level){
+    private Color isFancyHelper(Point center, int level,int maxlevel){
 
-        List<Point> pointList=blackBoard.corners(center);
+        List<Point> pointList=blackBoard.corners(center,level,maxlevel);
         Color c1=rayTracer.traceRay(new Ray(p0,pointList.get(0).subtract(p0)));
         Color c2=rayTracer.traceRay(new Ray(p0,pointList.get(1).subtract(p0)));
         Color c3=rayTracer.traceRay(new Ray(p0,pointList.get(2).subtract(p0)));
         Color c4=rayTracer.traceRay(new Ray(p0,pointList.get(3).subtract(p0)));
 
-        if(c1==c2&&c1==c3&&c1==c4)
+        if(c1.isCloseEquals(c2)&&c1.isCloseEquals(c3)&&c1.isCloseEquals(c4))
             return c1;
 
         if(level==0) {
@@ -280,12 +332,13 @@ public class Camera implements Cloneable {
         }
 
         else{
-            pointList=blackBoard.centers(center);
-            c1= (isFancyHelper(pointList.get(0),level-1)).add(isFancyHelper(pointList.get(1),level+1)).add(isFancyHelper(pointList.get(2),level+1)).add(isFancyHelper(pointList.get(3),level+1));
+            pointList=blackBoard.centers(center,level,maxlevel);
+            c1= (isFancyHelper(pointList.get(0),level-1,maxlevel)).add(isFancyHelper(pointList.get(1),level-1,maxlevel).add(isFancyHelper(pointList.get(2),level-1,maxlevel)).add(isFancyHelper(pointList.get(3),level-1,maxlevel)));
             return c1.reduce(4);
         }
 
     }
+
 
 
 
@@ -294,6 +347,19 @@ public class Camera implements Cloneable {
      */
     public static class Builder{
         private final Camera camera = new Camera();
+
+        public Builder setMultithreading(int threads) {
+            if (threads < -2) throw new IllegalArgumentException("Multithreading must be -2 or higher");if (threads >= -1) threadsCount = threads;
+            else { // == -2
+                int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
+                threadsCount = cores <= 2 ? 1 : cores;
+            }
+            return this;
+        }
+        public Builder setDebugPrint(double interval) {
+            printInterval = interval;
+            return this;
+        }
 
         public Builder setImageWriter(int Horizontal, int Vertical, String imageName) throws CloneNotSupportedException {
             Camera.Builder cameraBuilder = Camera.getBuilder();

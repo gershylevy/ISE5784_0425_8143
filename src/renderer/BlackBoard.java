@@ -164,28 +164,14 @@ public class BlackBoard{
     }
 
 
-    public List<Point> corners(Point pixelCenter){
-    /*    List<Point> pointList=new LinkedList<>();
-        Point topLeft=(pixelCenter.add(vRight.scale(-0.5*pixelWidth).add(vUp.scale(0.5*pixelHeight))));
-        double x=(pixelWidth / gridSize) / 10;
-        int numX=1;
-        int numY=1;
+    public List<Point> corners(Point pixelCenter,int level,int maxlevel){
 
-        for(int i=0;i<=numX;i++)
-            for(int j=0;j<=numY;j++) {
-                if(i!=0&&j!=0) {
-                    Point p = topLeft.add((vRight.scale(i * (pixelWidth / numX))).add(vUp.scale(j * (-pixelHeight / numY))));
-                    Ray r=
-                }
-
-            }
-
-     */
+        int temp=maxlevel-level+1;
         List<Point> pointList=new LinkedList<>();
-        Point topLeft=(pixelCenter.add(vRight.scale(-0.5*pixelWidth).add(vUp.scale(0.5*pixelHeight))));
-        Point topRight=topLeft.add(vRight.scale(pixelWidth));
-        Point bottomRight=topRight.add(vUp.scale(-pixelHeight));
-        Point bottomLeft=bottomRight.add(vRight.scale(-pixelWidth));
+        Point topLeft=(pixelCenter.add(vRight.scale(-0.5*(pixelWidth/temp)).add(vUp.scale(0.5*(pixelHeight/temp)))));
+        Point topRight=topLeft.add(vRight.scale(pixelWidth/temp));
+        Point bottomRight=topRight.add(vUp.scale(-pixelHeight/temp));
+        Point bottomLeft=bottomRight.add(vRight.scale(-pixelWidth/temp));
 
         pointList.add(topLeft);
         pointList.add(topRight);
@@ -195,12 +181,13 @@ public class BlackBoard{
         return pointList;
     }
 
-    public List<Point> centers(Point center){
+    public List<Point> centers(Point center,int level,int maxlevel){
+        int temp=maxlevel-level+1;
         List<Point> pointList=new LinkedList<>();
-        Point topLeftCenter=(center.add(vRight.scale(-0.25*pixelWidth).add(vUp.scale(0.25*pixelHeight))));
-        Point topRightCenter=topLeftCenter.add(vRight.scale(pixelWidth/2));
-        Point bottomRightCenter=topRightCenter.add(vUp.scale(-pixelHeight/2));
-        Point bottomLeftCenter=bottomRightCenter.add(vRight.scale(-pixelWidth/2));
+        Point topLeftCenter=(center.add(vRight.scale(-0.25*(pixelWidth/temp)).add(vUp.scale(0.25*(pixelHeight/temp)))));
+        Point topRightCenter=topLeftCenter.add(vRight.scale(0.5*(pixelWidth/temp)));
+        Point bottomRightCenter=topRightCenter.add(vUp.scale(-0.5*(pixelHeight/temp)));
+        Point bottomLeftCenter=bottomRightCenter.add(vRight.scale(-0.5*(pixelWidth/temp)));
         pointList.add(topLeftCenter);
         pointList.add(topRightCenter);
         pointList.add(bottomLeftCenter);

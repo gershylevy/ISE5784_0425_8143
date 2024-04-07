@@ -26,7 +26,7 @@ public class special {
     private final Camera.Builder camera = Camera.getBuilder().setLocation(new Point(0, 0, -1000)).setDirection( new Vector(0, 0, 1), new Vector(0, 1, 0)) //
             .setVpDistance(1000).setVpSize(200, 200) //
             .setImageWriter(imageWriter) //
-            .setMultithreading(3).setDebugPrint(0.1);
+            .setMultithreading(4).setDebugPrint(0.1);
 
     private final Scene scene = new Scene("Test scene");
 
@@ -1566,10 +1566,11 @@ public class special {
                 new Triangle(pnts[529], pnts[530], pnts[470]).setEmission(color).setMaterial(mat) //
         );
         scene.lights.add(new PointLight(new Color(500, 500, 500), new Point(100, 0, -100)).setkQ(0.000001));
+        camera.setIsFancy(true);
 
         camera.setRayTracer(new SimpleRayTracer(scene)).build().renderImage();
         camera.build().printGrid(50, new Color(YELLOW));
-        camera.build().writeToImage();  
+        camera.build().writeToImage();
     }
 
 }

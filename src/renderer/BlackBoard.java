@@ -163,6 +163,14 @@ public class BlackBoard{
         return pointList;
     }
 
+    /**
+     * Function to find the corners of the pixel
+     * @param pixelCenter Center of the pixel
+     * @param level Current level of recursion
+     * @param maxlevel Max level of recursion
+     * @return List of Points with the corners
+     */
+
 
     public List<Point> corners(Point pixelCenter,int level,int maxlevel){
 
@@ -180,6 +188,14 @@ public class BlackBoard{
 
         return pointList;
     }
+
+    /**
+     * Function to find the centers of the 4 subPixels
+     * @param center Center of the pixel
+     * @param level Current level of recursion
+     * @param maxlevel Max level of recursion
+     * @return A list of Points with the centers of the subPixels
+     */
 
     public List<Point> centers(Point center,int level,int maxlevel){
         int temp=maxlevel-level+1;

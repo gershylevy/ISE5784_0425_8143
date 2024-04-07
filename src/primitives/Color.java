@@ -14,6 +14,20 @@ public class Color {
     */
    private final Double3     rgb;
 
+   /**
+    * Error margin for acuracy of Comparing Colors
+    */
+   public double errorMargin=1;
+
+   /**
+    * Setter for error margin
+    */
+
+   public Color setErrorMargin(double x){
+      errorMargin=x;
+      return this;
+   }
+
    /** Black color = (0,0,0) */
    public static final Color BLACK = new Color();
 
@@ -121,7 +135,7 @@ public class Color {
     * @return If they are close to equals
     */
    public boolean isCloseEquals(Color c1){
-      return (this.rgb.subtract(c1.rgb).lowerThan(1));
+      return (this.rgb.subtract(c1.rgb).lowerThan(errorMargin));
    }
 
 }

@@ -300,7 +300,7 @@ public class Camera implements Cloneable {
             Point center=constructRayHelper(Nx,Ny,indexI,indexT);
             blackBoard.setPixelWidth((double) this.viewPlaneWidth/Nx).setPixelHeight((double) this.viewPlaneHeight/Ny)
                     .setGridSize(17).setvUp(this.vUp).setvRight(this.vRight);
-            Color color1 = isFancyHelper(center,(int)(Math.log(blackBoard.gridSize)/Math.log(2)),(int)(Math.log(blackBoard.gridSize)/Math.log(2)));
+            Color color1 = isFancyHelper(center,(int)(Math.log(blackBoard.gridSize-1)/Math.log(2)),(int)(Math.log(blackBoard.gridSize-1)/Math.log(2)));
             this.imageWriter.writePixel(indexI, indexT, color1);
         }
         pixelManager.pixelDone();
@@ -322,6 +322,7 @@ public class Camera implements Cloneable {
         Color c2=rayTracer.traceRay(new Ray(p0,pointList.get(1).subtract(p0)));
         Color c3=rayTracer.traceRay(new Ray(p0,pointList.get(2).subtract(p0)));
         Color c4=rayTracer.traceRay(new Ray(p0,pointList.get(3).subtract(p0)));
+        c1.setErrorMargin(1);
 
         if(c1.isCloseEquals(c2)&&c1.isCloseEquals(c3)&&c1.isCloseEquals(c4))
             return c1;
